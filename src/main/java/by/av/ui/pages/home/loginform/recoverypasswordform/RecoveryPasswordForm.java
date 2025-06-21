@@ -1,4 +1,4 @@
-package by.av.ui.pages.home.loginform.forgotpasswordform;
+package by.av.ui.pages.home.loginform.recoverypasswordform;
 
 import by.av.ui.driver.Driver;
 import org.openqa.selenium.By;

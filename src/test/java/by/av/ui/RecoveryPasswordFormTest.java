@@ -1,8 +1,8 @@
 package by.av.ui;
 
 import by.av.ui.pages.home.loginform.LoginFormLocator;
-import by.av.ui.pages.home.loginform.forgotpasswordform.RecoveryPasswordForm;
-import by.av.ui.pages.home.loginform.forgotpasswordform.RecoveryPasswordFormLocator;
+import by.av.ui.pages.home.loginform.recoverypasswordform.RecoveryPasswordForm;
+import by.av.ui.pages.home.loginform.recoverypasswordform.RecoveryPasswordFormLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
