@@ -1,11 +1,13 @@
 package by.av.ui;
 
+import by.av.ui.expectedMessages.ExpectedMessages;
 import by.av.ui.pages.home.loginform.LoginFormLocator;
 import by.av.ui.pages.home.loginform.registrationform.RegistrationForm;
 import by.av.ui.pages.home.loginform.registrationform.RegistrationFormLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static by.av.utils.Utils.generateInvalidPhoneNumber;
 import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,20 +28,20 @@ public class RegistrationFormTest extends WithLoginSetUp {
     @Test
     public void checkTitleButtonsLabelsHelperAttributeOfRegistrationByPhoneNumberNames() {
         assertAll(
-                () -> assertEquals("Регистрация", registrationForm.getTitleRegistrationText()),
-                () -> assertEquals("по телефону", registrationForm.getChooseRegistrationByPhoneNumberText()),
-                () -> assertEquals("true", registrationForm.getChooseRegistrationByPhoneNumberAttributeAriaSelectedValue()),
-                () -> assertEquals("почте", registrationForm.getChooseRegistrationByEmailText()),
-                () -> assertEquals("false", registrationForm.getChooseRegistrationByEmailAttributeAriaSelectedValue()),
-                () -> assertEquals("Имя на кириллице", registrationForm.getLabelNameByPhoneNumberText()),
-                () -> assertEquals("Телефон", registrationForm.getLabelPhoneNumberText()),
-                () -> assertEquals("Пароль", registrationForm.getLabelPasswordForPhoneNumberText()),
-                () -> assertEquals("false", registrationForm.getButtonInvertForPhoneNumberAttributeAriaPressedValue()),
-                () -> assertEquals("password", registrationForm.getInputPasswordForPhoneNumberAttributeTypeValue()),
-                () -> assertEquals("Не короче 8 символов и только латиница и цифры", registrationForm.getWarnMessageForPasswordForPhoneNumberText()),
-                () -> assertEquals("Зарегистрироваться", registrationForm.getButtonRegistrationByPhoneNumberText()),
-                () -> assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled()),
-                () -> assertEquals("Вход\nдля тех, кто уже зарегистрирован", registrationForm.getButtonLoginText())
+                () -> assertEquals(ExpectedMessages.TITLE_REGISTRATION, registrationForm.getTitleRegistrationText()),
+                () -> assertEquals(ExpectedMessages.BUTTON_BY_PHONE_NUMBER, registrationForm.getChooseRegistrationByPhoneNumberText()),
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, registrationForm.getChooseRegistrationByPhoneNumberAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.BUTTON_BY_EMAIL, registrationForm.getChooseRegistrationByEmailText()),
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, registrationForm.getChooseRegistrationByEmailAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.LABEL_NAME, registrationForm.getLabelNameByPhoneNumberText()),
+                () -> assertEquals(ExpectedMessages.LABEL_PHONE, registrationForm.getLabelPhoneNumberText()),
+                () -> assertEquals(ExpectedMessages.LABEL_PASSWORD, registrationForm.getLabelPasswordForPhoneNumberText()),
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, registrationForm.getButtonInvertForPhoneNumberAttributeAriaPressedValue()),
+                () -> assertEquals(ExpectedMessages.PASSWORD_HIDDEN, registrationForm.getInputPasswordForPhoneNumberAttributeTypeValue()),
+                () -> assertEquals(ExpectedMessages.WARN_MESSAGE_FOR_PASSWORD, registrationForm.getWarnMessageForPasswordForPhoneNumberText()),
+                () -> assertEquals(ExpectedMessages.BUTTON_REGISTRATION, registrationForm.getButtonRegistrationByPhoneNumberText()),
+                () -> assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION)),
+                () -> assertEquals(ExpectedMessages.BUTTON_LOGIN_FORM, registrationForm.getButtonLoginText())
         );
     }
 
@@ -48,57 +50,57 @@ public class RegistrationFormTest extends WithLoginSetUp {
         waitOfElement(RegistrationFormLocator.BUTTON_INVERTER_FOR_PHONE_NUMBER);
         registrationForm.clickButtonInvertForPhoneNumber();
         assertAll(
-                () -> assertEquals("true", registrationForm.getButtonInvertForPhoneNumberAttributeAriaPressedValue()),
-                () -> assertEquals("text", registrationForm.getInputPasswordForPhoneNumberAttributeTypeValue())
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, registrationForm.getButtonInvertForPhoneNumberAttributeAriaPressedValue()),
+                () -> assertEquals(ExpectedMessages.PASSWORD_VISIBLE, registrationForm.getInputPasswordForPhoneNumberAttributeTypeValue())
         );
     }
 
     @Test
     public void checkButtonRegistrationByPhoneNumberEnabledAfterInputName() {
-        registrationForm.inputNameByPhoneNumber("test");
-        assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled());
+        registrationForm.inputNameByPhoneNumber(faker.name().firstName());
+        assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
     @Test
     public void checkButtonRegistrationByPhoneNumberEnabledAfterInputPhoneNumber() {
         registrationForm.inputPhoneNumber(generatePhoneNumber());
-        assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled());
+        assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
     @Test
     public void checkButtonRegistrationByPhoneNumberEnabledAfterInputPassword() {
         registrationForm.inputPasswordForPhoneNumber(faker.internet().password());
-        assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled());
+        assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
     @Test
     public void checkButtonRegistrationByPhoneNumberEnabledAfterInputNameAndPhoneNumber() {
-        registrationForm.inputNameByPhoneNumberAndPhoneNumber("test", generatePhoneNumber());
-        assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled());
+        registrationForm.inputNameByPhoneNumberAndPhoneNumber(faker.name().firstName(), generatePhoneNumber());
+        assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
     @Test
     public void checkButtonRegistrationByPhoneNumberEnabledAfterInputNameAndPassword() {
-        registrationForm.inputNameByPhoneNumberAndPasswordForPhoneNumber("test", faker.internet().password());
-        assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled());
+        registrationForm.inputNameByPhoneNumberAndPasswordForPhoneNumber(faker.name().firstName(), faker.internet().password());
+        assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
     @Test
     public void checkButtonRegistrationByPhoneNumberEnabledAfterInputPhoneNumberAndPassword() {
         registrationForm.inputPhoneNumberAndPasswordForPhoneNumber(generatePhoneNumber(), faker.internet().password());
-        assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled());
+        assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
     @Test
     public void checkButtonRegistrationByPhoneNumberEnabledAfterInputNameAndInvalidPhoneNumberAndPassword() {
-        registrationForm.inputNameByPhoneNumberAndPhoneNumberAndPasswordForPhoneNumber("test", "111111111", faker.internet().password());
-        assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled());
+        registrationForm.inputNameByPhoneNumberAndPhoneNumberAndPasswordForPhoneNumber(faker.name().firstName(), generateInvalidPhoneNumber(), faker.internet().password());
+        assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
     @Test
     public void checkButtonRegistrationByPhoneNumberAfterInputNameAndPhoneNumberAndPassword() {
-        registrationForm.inputNameByPhoneNumberAndPhoneNumberAndPasswordForPhoneNumber("test", generatePhoneNumber(), faker.internet().password(true));
-        assertTrue(registrationForm.isButtonRegistrationByPhoneNumberEnabled());
+        registrationForm.inputNameByPhoneNumberAndPhoneNumberAndPasswordForPhoneNumber(faker.name().firstName(), generatePhoneNumber(), faker.internet().password(true));
+        assertTrue(registrationForm.isButtonRegistrationByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonEnabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
 //    @Test
@@ -138,13 +140,13 @@ public class RegistrationFormTest extends WithLoginSetUp {
     public void checkReturnToRegistrationByPhoneNumberAfterGoToRegistrationByEmailOrLogin() {
         registrationForm.clickChooseRegistrationByEmail();
         assertAll(
-                () -> assertEquals("false", registrationForm.getChooseRegistrationByPhoneNumberAttributeAriaSelectedValue()),
-                () -> assertEquals("true", registrationForm.getChooseRegistrationByEmailAttributeAriaSelectedValue())
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, registrationForm.getChooseRegistrationByPhoneNumberAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, registrationForm.getChooseRegistrationByEmailAttributeAriaSelectedValue())
         );
         registrationForm.clickChooseRegistrationByPhoneNumber();
         assertAll(
-                () -> assertEquals("true", registrationForm.getChooseRegistrationByPhoneNumberAttributeAriaSelectedValue()),
-                () -> assertEquals("false", registrationForm.getChooseRegistrationByEmailAttributeAriaSelectedValue())
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, registrationForm.getChooseRegistrationByPhoneNumberAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, registrationForm.getChooseRegistrationByEmailAttributeAriaSelectedValue())
         );
     }
 
@@ -153,68 +155,70 @@ public class RegistrationFormTest extends WithLoginSetUp {
         waitOfElement(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL);
         registrationForm.clickChooseRegistrationByEmail();
         assertAll(
-                () -> assertEquals("Регистрация", registrationForm.getTitleRegistrationText()),
-                () -> assertEquals("по телефону", registrationForm.getChooseRegistrationByPhoneNumberText()),
-                () -> assertEquals("false", registrationForm.getChooseRegistrationByPhoneNumberAttributeAriaSelectedValue()),
-                () -> assertEquals("почте", registrationForm.getChooseRegistrationByEmailText()),
-                () -> assertEquals("true", registrationForm.getChooseRegistrationByEmailAttributeAriaSelectedValue()),
-                () -> assertEquals("Имя на кириллице", registrationForm.getLabelNameByEmailText()),
-                () -> assertEquals("Электронная почта", registrationForm.getLabelEmailText()),
-                () -> assertEquals("Пароль", registrationForm.getLabelPasswordForEmailText()),
-                () -> assertEquals("false", registrationForm.getButtonInvertForEmailAttributeAriaPressedValue()),
-                () -> assertEquals("password", registrationForm.getInputPasswordForEmailAttributeTypeValue()),
-                () -> assertEquals("Не короче 8 символов и только латиница и цифры", registrationForm.getWarnMessageForPasswordForEmailText()),
-                () -> assertEquals("Зарегистрироваться", registrationForm.getButtonRegistrationByEmailText()),
-                () -> assertFalse(registrationForm.isButtonRegistrationByEmailEnabled()),
-                () -> assertEquals("Вход\nдля тех, кто уже зарегистрирован", registrationForm.getButtonLoginText())
+                () -> assertEquals(ExpectedMessages.TITLE_REGISTRATION, registrationForm.getTitleRegistrationText()),
+                () -> assertEquals(ExpectedMessages.BUTTON_BY_PHONE_NUMBER, registrationForm.getChooseRegistrationByPhoneNumberText()),
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, registrationForm.getChooseRegistrationByPhoneNumberAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.BUTTON_BY_EMAIL, registrationForm.getChooseRegistrationByEmailText()),
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, registrationForm.getChooseRegistrationByEmailAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.LABEL_NAME, registrationForm.getLabelNameByEmailText()),
+                () -> assertEquals(ExpectedMessages.LABEL_EMAIL, registrationForm.getLabelEmailText()),
+                () -> assertEquals(ExpectedMessages.LABEL_PASSWORD, registrationForm.getLabelPasswordForEmailText()),
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, registrationForm.getButtonInvertForEmailAttributeAriaPressedValue()),
+                () -> assertEquals(ExpectedMessages.PASSWORD_HIDDEN, registrationForm.getInputPasswordForEmailAttributeTypeValue()),
+                () -> assertEquals(ExpectedMessages.WARN_MESSAGE_FOR_PASSWORD, registrationForm.getWarnMessageForPasswordForEmailText()),
+                () -> assertEquals(ExpectedMessages.BUTTON_REGISTRATION, registrationForm.getButtonRegistrationByEmailText()),
+                () -> assertFalse(registrationForm.isButtonRegistrationByEmailEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION)),
+                () -> assertEquals(ExpectedMessages.BUTTON_LOGIN_FORM, registrationForm.getButtonLoginText())
         );
     }
 
     @Test
     public void checkButtonInverterForEmail() {
+        waitOfElement(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL);
         registrationForm.clickChooseRegistrationByEmail();
         waitOfElement(RegistrationFormLocator.BUTTON_INVERTER_FOR_EMAIL);
         registrationForm.clickButtonInvertForEmail();
         assertAll(
-                () -> assertEquals("true", registrationForm.getButtonInvertForEmailAttributeAriaPressedValue()),
-                () -> assertEquals("text", registrationForm.getInputPasswordForEmailAttributeTypeValue())
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, registrationForm.getButtonInvertForEmailAttributeAriaPressedValue()),
+                () -> assertEquals(ExpectedMessages.PASSWORD_VISIBLE, registrationForm.getInputPasswordForEmailAttributeTypeValue())
         );
     }
 
     @Test
     public void checkButtonRegistrationByEmailEnabledAfterInputName() {
         registrationForm.clickChooseRegistrationByEmail();
-        registrationForm.inputNameByEmail("test");
-        assertFalse(registrationForm.isButtonRegistrationByEmailEnabled());
+        registrationForm.inputNameByEmail(faker.name().firstName());
+        assertFalse(registrationForm.isButtonRegistrationByEmailEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
     @Test
     public void checkButtonRegistrationByEmailEnabledAfterInputEmail() {
         registrationForm.clickChooseRegistrationByEmail();
         registrationForm.inputEmail(faker.internet().emailAddress());
-        assertFalse(registrationForm.isButtonRegistrationByEmailEnabled());
+        assertFalse(registrationForm.isButtonRegistrationByEmailEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
     @Test
     public void checkButtonRegistrationByEmailEnabledAfterInputPassword() {
+        waitOfElement(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL);
         registrationForm.clickChooseRegistrationByEmail();
         registrationForm.inputPasswordForEmail(faker.internet().password());
-        assertFalse(registrationForm.isButtonRegistrationByEmailEnabled());
+        assertFalse(registrationForm.isButtonRegistrationByEmailEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
     @Test
     public void checkButtonRegistrationByEmailEnabledAfterInputNameAndEmail() {
         registrationForm.clickChooseRegistrationByEmail();
-        registrationForm.inputNameByEmailAndEmail("test", faker.internet().emailAddress());
-        assertFalse(registrationForm.isButtonRegistrationByEmailEnabled());
+        registrationForm.inputNameByEmailAndEmail(faker.name().firstName(), faker.internet().emailAddress());
+        assertFalse(registrationForm.isButtonRegistrationByEmailEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
     @Test
     public void checkButtonRegistrationByEmailEnabledAfterInputNameAndPassword() {
         waitOfElement(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL);
         registrationForm.clickChooseRegistrationByEmail();
-        registrationForm.inputNameByEmailAndPasswordForEmail("test", faker.internet().password());
-        assertFalse(registrationForm.isButtonRegistrationByEmailEnabled());
+        registrationForm.inputNameByEmailAndPasswordForEmail(faker.name().firstName(), faker.internet().password());
+        assertFalse(registrationForm.isButtonRegistrationByEmailEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
     @Test
@@ -222,14 +226,15 @@ public class RegistrationFormTest extends WithLoginSetUp {
         waitOfElement(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL);
         registrationForm.clickChooseRegistrationByEmail();
         registrationForm.inputEmailAndPasswordForEmail(faker.internet().emailAddress(), faker.internet().password());
-        assertFalse(registrationForm.isButtonRegistrationByEmailEnabled());
+        assertFalse(registrationForm.isButtonRegistrationByEmailEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
     @Test
     public void checkButtonRegistrationByEmailEnabledAfterInputNameAndEmailAndPassword() {
+        waitOfElement(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL);
         registrationForm.clickChooseRegistrationByEmail();
-        registrationForm.inputNameByEmailAndEmailAndPasswordForEmail("test", faker.internet().emailAddress(), faker.internet().password(true));
-        assertTrue(registrationForm.isButtonRegistrationByEmailEnabled());
+        registrationForm.inputNameByEmailAndEmailAndPasswordForEmail(faker.name().firstName(), faker.internet().emailAddress(), faker.internet().password(true));
+        assertTrue(registrationForm.isButtonRegistrationByEmailEnabled(), ExpectedMessages.getMessageButtonEnabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
 //    @Test
@@ -276,6 +281,6 @@ public class RegistrationFormTest extends WithLoginSetUp {
     public void checkClickButtonLoginReturnToLoginForm() {
         registrationForm.clickButtonLogin();
         waitOfElement(LoginFormLocator.TITLE_LOGIN_FORM);
-        assertEquals("Вход", loginForm.getTitleText());
+        assertEquals(ExpectedMessages.TITLE_LOGIN, loginForm.getTitleText());
     }
 }

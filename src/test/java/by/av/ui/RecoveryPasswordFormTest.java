@@ -1,11 +1,13 @@
 package by.av.ui;
 
+import by.av.ui.expectedMessages.ExpectedMessages;
 import by.av.ui.pages.home.loginform.LoginFormLocator;
 import by.av.ui.pages.home.loginform.recoverypasswordform.RecoveryPasswordForm;
 import by.av.ui.pages.home.loginform.recoverypasswordform.RecoveryPasswordFormLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static by.av.utils.Utils.generateInvalidPhoneNumber;
 import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,36 +26,37 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
     @Test
     public void checkTitleTextButtonsLabelAttributeOfRecoveryByPhoneNumberNames() {
         assertAll(
-                () -> assertEquals("Вход", recoveryPasswordForm.getButtonLoginText()),
-                () -> assertEquals("Запрос на восстановление пароля", recoveryPasswordForm.getTitleRecoveryPasswordFormText()),
-                () -> assertEquals("по телефону", recoveryPasswordForm.getButtonRecoveryByPhoneNumberText()),
-                () -> assertEquals("true", recoveryPasswordForm.getButtonRecoveryByPhoneNumberAttributeAriaSelectedValue()),
-                () -> assertEquals("почте", recoveryPasswordForm.getButtonRecoveryByEmailText()),
-                () -> assertEquals("false", recoveryPasswordForm.getButtonRecoveryByEmailAttributeAriaSelectedValue()),
-                () -> assertEquals("Укажите телефон, который вы указывали при регистрации. После подтверждения номера телефона вы сможете ввести новый пароль.", recoveryPasswordForm.getTextRecoveryByPhoneNumber()),
-                () -> assertEquals("Телефон", recoveryPasswordForm.getLabelPhoneNumberText()),
-                () -> assertEquals("Отправить", recoveryPasswordForm.getButtonSendByPhoneNumberText()),
-                () -> assertFalse(recoveryPasswordForm.isButtonSendByPhoneNumberEnabled())
+                () -> assertEquals(ExpectedMessages.TITLE_LOGIN, recoveryPasswordForm.getButtonLoginText()),
+                () -> assertEquals(ExpectedMessages.TITLE_RECOVERY_PASSWORD, recoveryPasswordForm.getTitleRecoveryPasswordFormText()),
+                () -> assertEquals(ExpectedMessages.BUTTON_BY_PHONE_NUMBER, recoveryPasswordForm.getButtonRecoveryByPhoneNumberText()),
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, recoveryPasswordForm.getButtonRecoveryByPhoneNumberAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.BUTTON_BY_EMAIL, recoveryPasswordForm.getButtonRecoveryByEmailText()),
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, recoveryPasswordForm.getButtonRecoveryByEmailAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.TEXT_RECOVERY_BY_PHONE_NUMBER, recoveryPasswordForm.getTextRecoveryByPhoneNumber()),
+                () -> assertEquals(ExpectedMessages.LABEL_PHONE, recoveryPasswordForm.getLabelPhoneNumberText()),
+                () -> assertEquals(ExpectedMessages.BUTTON_SEND, recoveryPasswordForm.getButtonSendByPhoneNumberText()),
+                () -> assertFalse(recoveryPasswordForm.isButtonSendByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_SEND))
         );
     }
 
     @Test
     public void checkButtonSendByPhoneNumberEnabledAfterInputInvalidPhoneNumber() {
-        recoveryPasswordForm.inputPhoneNumber("111111111");
-        assertFalse(recoveryPasswordForm.isButtonSendByPhoneNumberEnabled());
+        recoveryPasswordForm.inputPhoneNumber(generateInvalidPhoneNumber());
+        assertFalse(recoveryPasswordForm.isButtonSendByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_SEND));
     }
 
     @Test
     public void checkButtonSendByPhoneNumberEnabledAfterInputPhoneNumber() {
         recoveryPasswordForm.inputPhoneNumber(generatePhoneNumber());
-        assertTrue(recoveryPasswordForm.isButtonSendByPhoneNumberEnabled());
+        assertTrue(recoveryPasswordForm.isButtonSendByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonEnabled(ExpectedMessages.BUTTON_SEND));
     }
 
     @Test
     public void checkClickButtonSendByPhoneNumberEnabledAfterInputPhoneNumber() {
         checkButtonSendByPhoneNumberEnabledAfterInputPhoneNumber();
         recoveryPasswordForm.clickButtonSendByPhoneNumber();
-        assertEquals("Такого пользователя у нас нет. Проверьте указанный номер", loginForm.getErrorMessageText());
+        waitOfElement(LoginFormLocator.ERROR_MESSAGE);
+        assertEquals(ExpectedMessages.ERROR_MESSAGE_RECOVERY_BY_PHONE_NUMBER, loginForm.getErrorMessageText());
     }
 
     @Test
@@ -61,30 +64,31 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL);
         recoveryPasswordForm.clickButtonRecoveryByEmail();
         assertAll(
-                () -> assertEquals("false", recoveryPasswordForm.getButtonRecoveryByPhoneNumberAttributeAriaSelectedValue()),
-                () -> assertEquals("true", recoveryPasswordForm.getButtonRecoveryByEmailAttributeAriaSelectedValue())
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, recoveryPasswordForm.getButtonRecoveryByPhoneNumberAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, recoveryPasswordForm.getButtonRecoveryByEmailAttributeAriaSelectedValue())
         );
         recoveryPasswordForm.clickButtonRecoveryByPhoneNumber();
         assertAll(
-                () -> assertEquals("true", recoveryPasswordForm.getButtonRecoveryByPhoneNumberAttributeAriaSelectedValue()),
-                () -> assertEquals("false", recoveryPasswordForm.getButtonRecoveryByEmailAttributeAriaSelectedValue())
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, recoveryPasswordForm.getButtonRecoveryByPhoneNumberAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, recoveryPasswordForm.getButtonRecoveryByEmailAttributeAriaSelectedValue())
         );
     }
 
     @Test
     public void checkTitleTextButtonsLabelAttributeOfRecoveryByEmailNames() {
         recoveryPasswordForm.clickButtonRecoveryByEmail();
+        waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL, "aria-selected", "true");
         assertAll(
-                () -> assertEquals("Вход", recoveryPasswordForm.getButtonLoginText()),
-                () -> assertEquals("Запрос на восстановление пароля", recoveryPasswordForm.getTitleRecoveryPasswordFormText()),
-                () -> assertEquals("по телефону", recoveryPasswordForm.getButtonRecoveryByPhoneNumberText()),
-                () -> assertEquals("false", recoveryPasswordForm.getButtonRecoveryByPhoneNumberAttributeAriaSelectedValue()),
-                () -> assertEquals("почте", recoveryPasswordForm.getButtonRecoveryByEmailText()),
-                () -> assertEquals("true", recoveryPasswordForm.getButtonRecoveryByEmailAttributeAriaSelectedValue()),
-                () -> assertEquals("Укажите адрес электронной почты, который вы указывали при регистрации. На него мы отправим инструкции по восстановлению пароля.", recoveryPasswordForm.getTextRecoveryByPEmail()),
-                () -> assertEquals("Электронная почта", recoveryPasswordForm.getLabelEmailText()),
-                () -> assertEquals("Отправить", recoveryPasswordForm.getButtonSendByEmailText()),
-                () -> assertFalse(recoveryPasswordForm.isButtonSendByEmailEnabled())
+                () -> assertEquals(ExpectedMessages.TITLE_LOGIN, recoveryPasswordForm.getButtonLoginText()),
+                () -> assertEquals(ExpectedMessages.TITLE_RECOVERY_PASSWORD, recoveryPasswordForm.getTitleRecoveryPasswordFormText()),
+                () -> assertEquals(ExpectedMessages.BUTTON_BY_PHONE_NUMBER, recoveryPasswordForm.getButtonRecoveryByPhoneNumberText()),
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, recoveryPasswordForm.getButtonRecoveryByPhoneNumberAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.BUTTON_BY_EMAIL, recoveryPasswordForm.getButtonRecoveryByEmailText()),
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, recoveryPasswordForm.getButtonRecoveryByEmailAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.TEXT_RECOVERY_BY_EMAIL, recoveryPasswordForm.getTextRecoveryByPEmail()),
+                () -> assertEquals(ExpectedMessages.LABEL_EMAIL, recoveryPasswordForm.getLabelEmailText()),
+                () -> assertEquals(ExpectedMessages.BUTTON_SEND, recoveryPasswordForm.getButtonSendByEmailText()),
+                () -> assertFalse(recoveryPasswordForm.isButtonSendByEmailEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_SEND))
         );
     }
 
@@ -92,12 +96,12 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
     public void checkClickButtonSendByEmailAfterInputAnyKeyInEmailField() {
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL);
         recoveryPasswordForm.clickButtonRecoveryByEmail();
-        recoveryPasswordForm.inputEmail("1");
+        recoveryPasswordForm.inputEmail(generateInvalidPhoneNumber());
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL);
         recoveryPasswordForm.clickButtonSendByEmail();
         assertAll(
-                () -> assertTrue(recoveryPasswordForm.isButtonSendByEmailEnabled()),
-                () -> assertEquals("Введите почту полностью. Например, info@av.by", loginForm.getErrorMessageText())
+                () -> assertTrue(recoveryPasswordForm.isButtonSendByEmailEnabled(), ExpectedMessages.getMessageButtonEnabled(ExpectedMessages.BUTTON_SEND)),
+                () -> assertEquals(ExpectedMessages.ERROR_MESSAGE_INVALID_EMAIL, loginForm.getErrorMessageText())
         );
     }
 
@@ -107,17 +111,19 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
         recoveryPasswordForm.clickButtonRecoveryByEmail();
         recoveryPasswordForm.inputEmail(faker.internet().emailAddress());
         recoveryPasswordForm.clickButtonSendByEmail();
+        waitOfElement(LoginFormLocator.ERROR_MESSAGE);
         assertAll(
-                () -> assertTrue(recoveryPasswordForm.isButtonSendByEmailEnabled()),
-                () -> assertEquals("Такого пользователя у нас нет. Проверьте указанную почту", loginForm.getErrorMessageText())
+                () -> assertTrue(recoveryPasswordForm.isButtonSendByEmailEnabled(), ExpectedMessages.getMessageButtonEnabled(ExpectedMessages.BUTTON_SEND)),
+                () -> assertEquals(ExpectedMessages.ERROR_MESSAGE_RECOVERY_BY_EMAIL, loginForm.getErrorMessageText())
         );
     }
 
     @Test
     public void checkClickButtonLoginReturnToLoginForm() {
+        waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_PHONE_NUMBER, "aria-selected", "true");
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_LOGIN);
         recoveryPasswordForm.clickButtonLogin();
         waitOfElement(LoginFormLocator.TITLE_LOGIN_FORM);
-        assertEquals("Вход", loginForm.getTitleText());
+        assertEquals(ExpectedMessages.TITLE_LOGIN, loginForm.getTitleText());
     }
 }

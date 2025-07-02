@@ -1,8 +1,11 @@
 package by.av.ui;
 
+import by.av.ui.expectedMessages.ExpectedMessages;
+import by.av.ui.pages.home.loginform.LoginFormLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static by.av.utils.Utils.generateInvalidPhoneNumber;
 import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,21 +19,20 @@ public class LoginFormTest extends WithLoginSetUp {
     @Test
     public void checkTitleLabelsButtonsAttributeOfLoginByPhoneNumberNames() {
         assertAll(
-                () -> assertEquals("Вход", loginForm.getTitleText()),
-                () -> assertEquals("false", loginForm.getLoginFormOpenedAttributeAriaHiddenValue()),
-                () -> assertEquals("по телефону", loginForm.getButtonLoginByPhoneNumberText()),
-                () -> assertEquals("true", loginForm.getButtonLoginByPhoneNumberAttributeAriaSelectedValue()),
-                () -> assertEquals("почте или логину", loginForm.getButtonLoginByEmailOrLoginText()),
-                () -> assertEquals("false", loginForm.getButtonLoginByEmailOrLoginAttributeAriaSelectedValue()),
-                () -> assertEquals("Телефон", loginForm.getLabelPhoneNumberText()),
-                () -> assertEquals("Пароль", loginForm.getLabelPasswordForPhoneNumberText()),
-                () -> assertEquals("false", loginForm.getButtonInvertAttributeAriaPressedValue()),
-                () -> assertEquals("password", loginForm.getInputPasswordForPhoneNumberAttributeTypeValue()),
-                () -> assertEquals("Не помню пароль", loginForm.getButtonRecoveryPasswordText()),
-                () -> assertEquals("Войти", loginForm.getButtonLoginText()),
-                () -> assertFalse(loginForm.isButtonLoginEnabled()),
-                () -> assertEquals("Регистрация\n" +
-                        "для тех, кто первый раз на сайте", loginForm.getButtonRegistrationText())
+                () -> assertEquals(ExpectedMessages.TITLE_LOGIN, loginForm.getTitleText()),
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, loginForm.getLoginFormOpenedAttributeAriaHiddenValue()),
+                () -> assertEquals(ExpectedMessages.BUTTON_BY_PHONE_NUMBER, loginForm.getButtonLoginByPhoneNumberText()),
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, loginForm.getButtonLoginByPhoneNumberAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.BUTTON_BY_EMAIL_OR_LOGIN, loginForm.getButtonLoginByEmailOrLoginText()),
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, loginForm.getButtonLoginByEmailOrLoginAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.LABEL_PHONE, loginForm.getLabelPhoneNumberText()),
+                () -> assertEquals(ExpectedMessages.LABEL_PASSWORD, loginForm.getLabelPasswordForPhoneNumberText()),
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, loginForm.getButtonInvertAttributeAriaPressedValue()),
+                () -> assertEquals(ExpectedMessages.PASSWORD_HIDDEN, loginForm.getInputPasswordForPhoneNumberAttributeTypeValue()),
+                () -> assertEquals(ExpectedMessages.BUTTON_RECOVERY, loginForm.getButtonRecoveryPasswordText()),
+                () -> assertEquals(ExpectedMessages.BUTTON_LOGIN, loginForm.getButtonLoginText()),
+                () -> assertFalse(loginForm.isButtonLoginEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_LOGIN)),
+                () -> assertEquals(ExpectedMessages.BUTTON_REGISTRATION_FORM, loginForm.getButtonRegistrationText())
         );
     }
 
@@ -38,8 +40,8 @@ public class LoginFormTest extends WithLoginSetUp {
     public void checkButtonInverterForLoginByPhoneNumber() {
         loginForm.clickButtonInvert();
         assertAll(
-                () -> assertEquals("true", loginForm.getButtonInvertAttributeAriaPressedValue()),
-                () -> assertEquals("text", loginForm.getInputPasswordForPhoneNumberAttributeTypeValue())
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, loginForm.getButtonInvertAttributeAriaPressedValue()),
+                () -> assertEquals(ExpectedMessages.PASSWORD_VISIBLE, loginForm.getInputPasswordForPhoneNumberAttributeTypeValue())
         );
 
     }
@@ -47,45 +49,45 @@ public class LoginFormTest extends WithLoginSetUp {
     @Test
     public void checkButtonLoginEnabledAfterInputPhoneNumber() {
         loginForm.inputPhoneNumber(generatePhoneNumber());
-        assertFalse(loginForm.isButtonLoginEnabled());
+        assertFalse(loginForm.isButtonLoginEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_LOGIN));
     }
 
     @Test
     public void checkButtonLoginEnabledAfterInputPasswordForPhoneNumber() {
         loginForm.inputPasswordForPhoneNumber(faker.internet().password());
-        assertFalse(loginForm.isButtonLoginEnabled());
+        assertFalse(loginForm.isButtonLoginEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_LOGIN));
     }
 
     @Test
     public void checkButtonLoginEnabledAfterInputInvalidPhoneNumberAndInputPasswordForPhoneNumber() {
-        loginForm.inputPhoneNumberAndPasswordForPhoneNumber("111111111", faker.internet().password());
-        assertFalse(loginForm.isButtonLoginEnabled());
+        loginForm.inputPhoneNumberAndPasswordForPhoneNumber(generateInvalidPhoneNumber(), faker.internet().password());
+        assertFalse(loginForm.isButtonLoginEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_LOGIN));
     }
 
     @Test
     public void checkButtonLoginEnabledAfterInputPhoneNumberAndInputPasswordForPhoneNumber() {
         loginForm.inputPhoneNumberAndPasswordForPhoneNumber(generatePhoneNumber(), faker.internet().password());
-        assertTrue(loginForm.isButtonLoginEnabled());
+        assertTrue(loginForm.isButtonLoginEnabled(), ExpectedMessages.getMessageButtonEnabled(ExpectedMessages.BUTTON_LOGIN));
     }
 
     @Test
     public void checkClickButtonLoginEnabledAfterInputNonRegisteredPhoneNumberAndInputPasswordForPhoneNumber() {
         checkButtonLoginEnabledAfterInputPhoneNumberAndInputPasswordForPhoneNumber();
         loginForm.clickButtonLogin();
-        assertEquals("Неверный телефон или пароль. Если забыли пароль, восстановите его", loginForm.getErrorMessageText());
+        assertEquals(ExpectedMessages.ERROR_MESSAGE_LOGIN_BY_PHONE_NUMBER, loginForm.getErrorMessageText());
     }
 
     @Test
     public void checkReturnToLoginByPhoneNumberAfterGoToLoginByEmailOrLogin() {
         loginForm.clickButtonLoginByEmailOrLogin();
         assertAll(
-                () -> assertEquals("false", loginForm.getButtonLoginByPhoneNumberAttributeAriaSelectedValue()),
-                () -> assertEquals("true", loginForm.getButtonLoginByEmailOrLoginAttributeAriaSelectedValue())
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, loginForm.getButtonLoginByPhoneNumberAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, loginForm.getButtonLoginByEmailOrLoginAttributeAriaSelectedValue())
         );
         loginForm.clickButtonLoginByPhoneNumber();
         assertAll(
-                () -> assertEquals("true", loginForm.getButtonLoginByPhoneNumberAttributeAriaSelectedValue()),
-                () -> assertEquals("false", loginForm.getButtonLoginByEmailOrLoginAttributeAriaSelectedValue())
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, loginForm.getButtonLoginByPhoneNumberAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, loginForm.getButtonLoginByEmailOrLoginAttributeAriaSelectedValue())
         );
     }
 
@@ -93,31 +95,32 @@ public class LoginFormTest extends WithLoginSetUp {
     public void checkTitleLabelsButtonsAttributeOfLoginByEmailOrLoginNames() {
         loginForm.clickButtonLoginByEmailOrLogin();
         assertAll(
-                () -> assertEquals("Вход", loginForm.getTitleText()),
-                () -> assertEquals("false", loginForm.getLoginFormOpenedAttributeAriaHiddenValue()),
-                () -> assertEquals("по телефону", loginForm.getButtonLoginByPhoneNumberText()),
-                () -> assertEquals("false", loginForm.getButtonLoginByPhoneNumberAttributeAriaSelectedValue()),
-                () -> assertEquals("почте или логину", loginForm.getButtonLoginByEmailOrLoginText()),
-                () -> assertEquals("true", loginForm.getButtonLoginByEmailOrLoginAttributeAriaSelectedValue()),
-                () -> assertEquals("Электронная почта или логин", loginForm.getLabelEmailOrLoginText()),
-                () -> assertEquals("Пароль", loginForm.getLabelPasswordForPEmailOrLoginText()),
-                () -> assertEquals("false", loginForm.getButtonInvertAttributeAriaPressedValue()),
-                () -> assertEquals("password", loginForm.getInputPasswordForEmailOrLoginAttributeATypeValue()),
-                () -> assertEquals("Не помню пароль", loginForm.getButtonRecoveryPasswordText()),
-                () -> assertEquals("Войти", loginForm.getButtonLoginText()),
-                () -> assertFalse(loginForm.isButtonLoginEnabled()),
-                () -> assertEquals("Регистрация\n" +
-                        "для тех, кто первый раз на сайте", loginForm.getButtonRegistrationText())
+                () -> assertEquals(ExpectedMessages.TITLE_LOGIN, loginForm.getTitleText()),
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, loginForm.getLoginFormOpenedAttributeAriaHiddenValue()),
+                () -> assertEquals(ExpectedMessages.BUTTON_BY_PHONE_NUMBER, loginForm.getButtonLoginByPhoneNumberText()),
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, loginForm.getButtonLoginByPhoneNumberAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.BUTTON_BY_EMAIL_OR_LOGIN, loginForm.getButtonLoginByEmailOrLoginText()),
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, loginForm.getButtonLoginByEmailOrLoginAttributeAriaSelectedValue()),
+                () -> assertEquals(ExpectedMessages.LABEL_EMAIL_OR_LOGIN, loginForm.getLabelEmailOrLoginText()),
+                () -> assertEquals(ExpectedMessages.LABEL_PASSWORD, loginForm.getLabelPasswordForPEmailOrLoginText()),
+                () -> assertEquals(ExpectedMessages.INACTIVE_ATTRIBUTE, loginForm.getButtonInvertAttributeAriaPressedValue()),
+                () -> assertEquals(ExpectedMessages.PASSWORD_HIDDEN, loginForm.getInputPasswordForEmailOrLoginAttributeATypeValue()),
+                () -> assertEquals(ExpectedMessages.BUTTON_RECOVERY, loginForm.getButtonRecoveryPasswordText()),
+                () -> assertEquals(ExpectedMessages.BUTTON_LOGIN, loginForm.getButtonLoginText()),
+                () -> assertFalse(loginForm.isButtonLoginEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_LOGIN)),
+                () -> assertEquals(ExpectedMessages.BUTTON_REGISTRATION_FORM, loginForm.getButtonRegistrationText())
         );
     }
 
     @Test
     public void checkButtonInverterForLoginByEmailOrLogin() {
         loginForm.clickButtonLoginByEmailOrLogin();
+        waitOfElement(LoginFormLocator.INPUT_PASSWORD_FOR_EMAIL_OR_LOGIN);
         loginForm.clickButtonInvert();
+        waitOfElement(LoginFormLocator.BUTTON_INVERTER, "aria-pressed", "true");
         assertAll(
-                () -> assertEquals("true", loginForm.getButtonInvertAttributeAriaPressedValue()),
-                () -> assertEquals("text", loginForm.getInputPasswordForEmailOrLoginAttributeATypeValue())
+                () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, loginForm.getButtonInvertAttributeAriaPressedValue()),
+                () -> assertEquals(ExpectedMessages.PASSWORD_VISIBLE, loginForm.getInputPasswordForEmailOrLoginAttributeATypeValue())
         );
 
     }
@@ -126,21 +129,21 @@ public class LoginFormTest extends WithLoginSetUp {
     public void checkButtonLoginEnabledAfterInputEmailOrLogin() {
         loginForm.clickButtonLoginByEmailOrLogin();
         loginForm.inputEmailOrLogin(faker.internet().emailAddress());
-        assertFalse(loginForm.isButtonLoginEnabled());
+        assertFalse(loginForm.isButtonLoginEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_LOGIN));
     }
 
     @Test
     public void checkButtonLoginEnabledAfterInputPasswordForEmailOrLogin() {
         loginForm.clickButtonLoginByEmailOrLogin();
         loginForm.inputPasswordForEmailOrLogin(faker.internet().password());
-        assertFalse(loginForm.isButtonLoginEnabled());
+        assertFalse(loginForm.isButtonLoginEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_LOGIN));
     }
 
     @Test
     public void checkButtonLoginEnabledAfterInputEmailOrLoginAndInputPasswordForEmailOrLogin() {
         loginForm.clickButtonLoginByEmailOrLogin();
         loginForm.inputEmailOrLoginAndPasswordForEmailOrLogin(faker.internet().emailAddress(), faker.internet().password());
-        assertTrue(loginForm.isButtonLoginEnabled());
+        assertTrue(loginForm.isButtonLoginEnabled(), ExpectedMessages.getMessageButtonEnabled(ExpectedMessages.BUTTON_LOGIN));
     }
 
 
@@ -148,12 +151,12 @@ public class LoginFormTest extends WithLoginSetUp {
     public void checkClickButtonLoginEnabledAfterInputNonRegisteredEmailOrLoginAndInputPasswordForEmailOrLogin() {
         checkButtonLoginEnabledAfterInputEmailOrLoginAndInputPasswordForEmailOrLogin();
         loginForm.clickButtonLogin();
-        assertEquals("Неверный логин или пароль. Если забыли пароль, восстановите его", loginForm.getErrorMessageText());
+        assertEquals(ExpectedMessages.ERROR_MESSAGE_LOGIN_BY_EMAIL, loginForm.getErrorMessageText());
     }
 
     @Test
     public void checkButtonCrossCloseLoginForm() {
         loginForm.clickButtonCross();
-        assertEquals("true", loginForm.getLoginFormClosedAttributeAriaHiddenValue());
+        assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, loginForm.getLoginFormClosedAttributeAriaHiddenValue());
     }
 }
