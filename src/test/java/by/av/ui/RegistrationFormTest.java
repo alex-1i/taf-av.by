@@ -13,8 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RegistrationFormTest extends WithLoginSetUp {
 
-    // к сожалению при частом нажатии на кнопку регистрации возникает капча, поэтому некоторые методы закомментированы
-
     private RegistrationForm registrationForm;
 
     @BeforeEach
@@ -49,6 +47,7 @@ public class RegistrationFormTest extends WithLoginSetUp {
     public void checkButtonInverterForPhoneNumber() {
         waitOfElement(RegistrationFormLocator.BUTTON_INVERTER_FOR_PHONE_NUMBER);
         registrationForm.clickButtonInvertForPhoneNumber();
+        waitOfElement(RegistrationFormLocator.BUTTON_INVERTER_FOR_PHONE_NUMBER, "aria-pressed", "true");
         assertAll(
                 () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, registrationForm.getButtonInvertForPhoneNumberAttributeAriaPressedValue()),
                 () -> assertEquals(ExpectedMessages.PASSWORD_VISIBLE, registrationForm.getInputPasswordForPhoneNumberAttributeTypeValue())
@@ -103,39 +102,6 @@ public class RegistrationFormTest extends WithLoginSetUp {
         assertTrue(registrationForm.isButtonRegistrationByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonEnabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 
-//    @Test
-//    public void checkAndClickButtonRegistrationByPhoneNumberAfterInputInvalidNameAndPhoneNumberAndPasswordConsistsOfOnlyLetters() {
-//        registrationForm.inputNameByPhoneNumberAndPhoneNumberAndPasswordForPhoneNumber("test", generatePhoneNumber(), faker.internet().password(false));
-//        registrationForm.clickButtonRegistrationByPhoneNumber();
-//        assertAll(
-//                () -> assertTrue(registrationForm.isButtonRegistrationByPhoneNumberEnabled()),
-//                () -> assertEquals("Напишите имя кириллицей", registrationForm.getErrorMessageForNameByPhoneNumberText()),
-//                () -> assertEquals("В пароле должны быть цифры и латинские буквы", registrationForm.getErrorMessageForPasswordForPhoneNumberText())
-//        );
-//    }
-
-//    @Test
-//    public void checkAndClickButtonRegistrationByPhoneNumberAfterInputInvalidNameAndPhoneNumberAndPasswordConsistsOfOnlyDigits() {
-//        registrationForm.inputNameByPhoneNumberAndPhoneNumberAndPasswordForPhoneNumber("test", generatePhoneNumber(), "1234567890");
-//        registrationForm.clickButtonRegistrationByPhoneNumber();
-//        assertAll(
-//                () -> assertTrue(registrationForm.isButtonRegistrationByPhoneNumberEnabled()),
-//                () -> assertEquals("Напишите имя кириллицей", registrationForm.getErrorMessageForNameByPhoneNumberText()),
-//                () -> assertEquals("В пароле должны быть цифры и латинские буквы", registrationForm.getErrorMessageForPasswordForPhoneNumberText())
-//        );
-//    }
-
-//    @Test
-//    public void checkAndClickButtonRegistrationByPhoneNumberAfterInputInvalidNameAndPhoneNumberAndShortPassword() {
-//        registrationForm.inputNameByPhoneNumberAndPhoneNumberAndPasswordForPhoneNumber("test", generatePhoneNumber(), faker.internet().password(2,7, false, false, true));
-//        registrationForm.clickButtonRegistrationByPhoneNumber();
-//        assertAll(
-//                () -> assertTrue(registrationForm.isButtonRegistrationByPhoneNumberEnabled()),
-//                () -> assertEquals("Напишите имя кириллицей", registrationForm.getErrorMessageForNameByPhoneNumberText()),
-//                () -> assertEquals("Минимум 8 символов", registrationForm.getErrorMessageForPasswordForPhoneNumberText())
-//        );
-//    }
-
     @Test
     public void checkReturnToRegistrationByPhoneNumberAfterGoToRegistrationByEmailOrLogin() {
         registrationForm.clickChooseRegistrationByEmail();
@@ -176,7 +142,8 @@ public class RegistrationFormTest extends WithLoginSetUp {
     public void checkButtonInverterForEmail() {
         waitOfElement(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL);
         registrationForm.clickChooseRegistrationByEmail();
-        waitOfElement(RegistrationFormLocator.BUTTON_INVERTER_FOR_EMAIL);
+        waitOfElement(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL, "aria-selected", "true");
+        waitOfElementToBeClickable(RegistrationFormLocator.BUTTON_INVERTER_FOR_EMAIL);
         registrationForm.clickButtonInvertForEmail();
         assertAll(
                 () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, registrationForm.getButtonInvertForEmailAttributeAriaPressedValue()),
@@ -186,6 +153,7 @@ public class RegistrationFormTest extends WithLoginSetUp {
 
     @Test
     public void checkButtonRegistrationByEmailEnabledAfterInputName() {
+        waitOfElement(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL);
         registrationForm.clickChooseRegistrationByEmail();
         registrationForm.inputNameByEmail(faker.name().firstName());
         assertFalse(registrationForm.isButtonRegistrationByEmailEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
@@ -193,6 +161,7 @@ public class RegistrationFormTest extends WithLoginSetUp {
 
     @Test
     public void checkButtonRegistrationByEmailEnabledAfterInputEmail() {
+        waitOfElement(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL);
         registrationForm.clickChooseRegistrationByEmail();
         registrationForm.inputEmail(faker.internet().emailAddress());
         assertFalse(registrationForm.isButtonRegistrationByEmailEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
@@ -208,6 +177,7 @@ public class RegistrationFormTest extends WithLoginSetUp {
 
     @Test
     public void checkButtonRegistrationByEmailEnabledAfterInputNameAndEmail() {
+        waitOfElement(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL);
         registrationForm.clickChooseRegistrationByEmail();
         registrationForm.inputNameByEmailAndEmail(faker.name().firstName(), faker.internet().emailAddress());
         assertFalse(registrationForm.isButtonRegistrationByEmailEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
@@ -236,46 +206,6 @@ public class RegistrationFormTest extends WithLoginSetUp {
         registrationForm.inputNameByEmailAndEmailAndPasswordForEmail(faker.name().firstName(), faker.internet().emailAddress(), faker.internet().password(true));
         assertTrue(registrationForm.isButtonRegistrationByEmailEnabled(), ExpectedMessages.getMessageButtonEnabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
-
-//    @Test
-//    public void checkAndClickButtonRegistrationByEmailEnabledAfterInputInvalidNameAndInvalidEmailAndPasswordConsistsOfOnlyLetters() {
-//        registrationForm.clickChooseRegistrationByEmail();
-//        registrationForm.inputNameByEmailAndEmailAndPasswordForEmail("test","1@1.1", faker.internet().password(false));
-//        registrationForm.clickButtonRegistrationByEmail();
-//        assertAll(
-//                () -> assertTrue(registrationForm.isButtonRegistrationByEmailEnabled()),
-//                () -> assertEquals("Напишите имя кириллицей", registrationForm.getErrorMessageForNameByEmailText()),
-//                () -> assertEquals("Введите почту полностью. Например, info@av.by", registrationForm.getErrorMessageForEmailText()),
-//                () -> assertEquals("В пароле должны быть цифры и латинские буквы", registrationForm.getErrorMessageForPasswordForEmailText())
-//        );
-//    }
-
-//    @Test
-//    public void checkAndClickButtonRegistrationByEmailEnabledAfterInputInvalidNameAndInvalidEmailAndPasswordConsistsOfOnlyDigits() {
-//        waitOfElement(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL);
-//        registrationForm.clickChooseRegistrationByEmail();
-//        registrationForm.inputNameByEmailAndEmailAndPasswordForEmail("test","1@1.1", "1234567890");
-//        registrationForm.clickButtonRegistrationByEmail();
-//        assertAll(
-//                () -> assertTrue(registrationForm.isButtonRegistrationByEmailEnabled()),
-//                () -> assertEquals("Напишите имя кириллицей", registrationForm.getErrorMessageForNameByEmailText()),
-//                () -> assertEquals("Введите почту полностью. Например, info@av.by", registrationForm.getErrorMessageForEmailText()),
-//                () -> assertEquals("В пароле должны быть цифры и латинские буквы", registrationForm.getErrorMessageForPasswordForEmailText())
-//        );
-//    }
-
-//    @Test
-//    public void checkAndClickButtonRegistrationByEmailEnabledAfterInputInvalidNameAndInvalidEmailAndShortPassword() {
-//        registrationForm.clickChooseRegistrationByEmail();
-//        registrationForm.inputNameByEmailAndEmailAndPasswordForEmail("test","1@1.1", faker.internet().password(2,7, false, false, true));
-//        registrationForm.clickButtonRegistrationByEmail();
-//        assertAll(
-//                () -> assertTrue(registrationForm.isButtonRegistrationByEmailEnabled()),
-//                () -> assertEquals("Напишите имя кириллицей", registrationForm.getErrorMessageForNameByEmailText()),
-//                () -> assertEquals("Введите почту полностью. Например, info@av.by", registrationForm.getErrorMessageForEmailText()),
-//                () -> assertEquals("В пароле должны быть цифры и латинские буквы", registrationForm.getErrorMessageForPasswordForEmailText())
-//        );
-//    }
 
     @Test
     public void checkClickButtonLoginReturnToLoginForm() {

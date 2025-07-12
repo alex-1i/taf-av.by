@@ -1,14 +1,9 @@
 package by.av.ui.pages.home.loginform.recoverypasswordform;
 
-import by.av.ui.driver.Driver;
+import by.av.ui.pages.home.HomePage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
-public class RecoveryPasswordForm {
-
-    private final WebDriver driver;
-
-    public RecoveryPasswordForm() { driver = Driver.getDriver(); }
+public class RecoveryPasswordForm extends HomePage {
 
     public String getButtonLoginText() {
         return driver.findElement(By.xpath(RecoveryPasswordFormLocator.BUTTON_LOGIN)).getText();

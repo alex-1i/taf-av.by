@@ -1,16 +1,9 @@
 package by.av.ui.pages.home.loginform;
 
-import by.av.ui.driver.Driver;
+import by.av.ui.pages.home.HomePage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
-public class LoginForm {
-
-    private final WebDriver driver;
-
-    public LoginForm() {
-        driver = Driver.getDriver();
-    }
+public class LoginForm extends HomePage {
 
     public String getLoginFormOpenedAttributeAriaHiddenValue() {
         return driver.findElement(By.xpath(LoginFormLocator.LOGIN_FORM_OPENED)).getDomAttribute("aria-hidden");

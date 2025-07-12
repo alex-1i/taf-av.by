@@ -29,11 +29,6 @@ public class RegistrationFormLocator {
     public static final String BUTTON_REGISTRATION_BY_EMAIL = RecoveryPasswordFormLocator.getButtonSendLocator(LoginFormLocator.BY_EMAIL_FORM);
     public static final String BUTTON_LOGIN = "//button[@class=\"drawer__slide-toggle\"]";
 
-    public static final String ERROR_MESSAGE_FOR_NAME_BY_PHONE_NUMBER = getErrorMessage(LoginFormLocator.BY_PHONE_NUMBER_FORM, "namePhone");
-    public static final String ERROR_MESSAGE_FOR_PASSWORD_FOR_PHONE_NUMBER = getErrorMessage(LoginFormLocator.BY_PHONE_NUMBER_FORM, "registrationPasswordPhone");
-    public static final String ERROR_MESSAGE_FOR_NAME_BY_EMAIL = getErrorMessage(LoginFormLocator.BY_EMAIL_FORM, "name");
-    public static final String ERROR_MESSAGE_FOR_EMAIL = getErrorMessage(LoginFormLocator.BY_EMAIL_FORM, "regEmail");
-    public static final String ERROR_MESSAGE_FOR_PASSWORD_FOR_EMAIL = getErrorMessage(LoginFormLocator.BY_EMAIL_FORM, "regPassword");
 
     public static String getButtonInvertOnRegistrationForm(String parent) {
         return "//div[@aria-labelledby=\"" + parent + "\"]//button[contains(@class, \"toggle-password-button\")]";
@@ -41,9 +36,5 @@ public class RegistrationFormLocator {
 
     public static String getWarnMessageForPassword(String parent) {
         return "//div[@aria-labelledby=\"" + parent + "\"]//small[text()=\"Не короче 8 символов и только латиница и цифры\"]";
-    }
-
-    public static String getErrorMessage(String parent, String id) {
-        return  "//div[@aria-labelledby=\"" + parent + "\"]//input[@id=\"" + id + "\"]/following-sibling::div[@class=\"error-message\"]";
     }
 }
