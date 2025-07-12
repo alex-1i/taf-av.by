@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static by.av.utils.Utils.generateInvalidPhoneNumber;
+import static by.av.utils.Utils.generateInvalidPhoneNumberOrEmail;
 import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,7 +34,7 @@ public class RegistrationFormTest {
 
     @Test
     public void checkRegistrationByPhoneNumberWithInvalidParameters() {
-        RegistrationByPhoneNumberForm registrationByPhoneNumberForm = new RegistrationByPhoneNumberForm(faker.name().firstName(), faker.internet().password(2, 7, false, false, false), 5, generateInvalidPhoneNumber());
+        RegistrationByPhoneNumberForm registrationByPhoneNumberForm = new RegistrationByPhoneNumberForm(faker.name().firstName(), faker.internet().password(2, 7, false, false, false), 5, generateInvalidPhoneNumberOrEmail());
 
         assertAll(
                 () -> assertEquals(HttpStatus.SC_BAD_REQUEST, registrationByPhoneNumberForm.getStatusCode()),
@@ -59,7 +59,7 @@ public class RegistrationFormTest {
 
     @Test
     public void checkRegistrationByPhoneNumberWithInvalidNameInvalidPasswordAndPhoneNumber() {
-        RegistrationByPhoneNumberForm registrationByPhoneNumberForm = new RegistrationByPhoneNumberForm(faker.name().firstName(), faker.internet().password(false), generateInvalidPhoneNumber());
+        RegistrationByPhoneNumberForm registrationByPhoneNumberForm = new RegistrationByPhoneNumberForm(faker.name().firstName(), faker.internet().password(false), generateInvalidPhoneNumberOrEmail());
 
         assertAll(
                 () -> assertEquals(HttpStatus.SC_BAD_REQUEST, registrationByPhoneNumberForm.getStatusCode()),
@@ -87,7 +87,7 @@ public class RegistrationFormTest {
 
     @Test
     public void checkRegistrationByEmailWithInvalidEmailAndShortNameAndPassword() {
-        RegistrationByEmailForm registrationByEmailForm = new RegistrationByEmailForm(generateInvalidPhoneNumber(), String.valueOf(faker.lorem().character()), faker.internet().password(2, 7));
+        RegistrationByEmailForm registrationByEmailForm = new RegistrationByEmailForm(generateInvalidPhoneNumberOrEmail(), String.valueOf(faker.lorem().character()), faker.internet().password(2, 7));
 
         assertAll(
                 () -> assertEquals(HttpStatus.SC_BAD_REQUEST, registrationByEmailForm.getStatusCode()),
@@ -101,7 +101,7 @@ public class RegistrationFormTest {
 
     @Test
     public void checkRegistrationByEmailWithInvalidParameters() {
-        RegistrationByEmailForm registrationByEmailForm = new RegistrationByEmailForm(generateInvalidPhoneNumber(), faker.name().firstName(), faker.internet().password(false));
+        RegistrationByEmailForm registrationByEmailForm = new RegistrationByEmailForm(generateInvalidPhoneNumberOrEmail(), faker.name().firstName(), faker.internet().password(false));
 
         assertAll(
                 () -> assertEquals(HttpStatus.SC_BAD_REQUEST, registrationByEmailForm.getStatusCode()),

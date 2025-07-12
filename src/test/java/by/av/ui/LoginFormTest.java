@@ -5,7 +5,7 @@ import by.av.ui.pages.home.loginform.LoginFormLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static by.av.utils.Utils.generateInvalidPhoneNumber;
+import static by.av.utils.Utils.generateInvalidPhoneNumberOrEmail;
 import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,7 +60,7 @@ public class LoginFormTest extends WithLoginSetUp {
 
     @Test
     public void checkButtonLoginEnabledAfterInputInvalidPhoneNumberAndInputPasswordForPhoneNumber() {
-        loginForm.inputPhoneNumberAndPasswordForPhoneNumber(generateInvalidPhoneNumber(), faker.internet().password());
+        loginForm.inputPhoneNumberAndPasswordForPhoneNumber(generateInvalidPhoneNumberOrEmail(), faker.internet().password());
         assertFalse(loginForm.isButtonLoginEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_LOGIN));
     }
 

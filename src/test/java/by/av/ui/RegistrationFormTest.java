@@ -7,7 +7,7 @@ import by.av.ui.pages.home.loginform.registrationform.RegistrationFormLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static by.av.utils.Utils.generateInvalidPhoneNumber;
+import static by.av.utils.Utils.generateInvalidPhoneNumberOrEmail;
 import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -93,7 +93,7 @@ public class RegistrationFormTest extends WithLoginSetUp {
 
     @Test
     public void checkButtonRegistrationByPhoneNumberEnabledAfterInputNameAndInvalidPhoneNumberAndPassword() {
-        registrationForm.inputNameByPhoneNumberAndPhoneNumberAndPasswordForPhoneNumber(faker.name().firstName(), generateInvalidPhoneNumber(), faker.internet().password());
+        registrationForm.inputNameByPhoneNumberAndPhoneNumberAndPasswordForPhoneNumber(faker.name().firstName(), generateInvalidPhoneNumberOrEmail(), faker.internet().password());
         assertFalse(registrationForm.isButtonRegistrationByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_REGISTRATION));
     }
 

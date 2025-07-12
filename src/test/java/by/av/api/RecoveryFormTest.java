@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static by.av.utils.Utils.generateInvalidPhoneNumber;
+import static by.av.utils.Utils.generateInvalidPhoneNumberOrEmail;
 import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -56,7 +56,7 @@ public class RecoveryFormTest {
 
     @Test
     public void checkRecoveryByPhoneNumberWithInvalidPhoneNumber() {
-        RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generateInvalidPhoneNumber());
+        RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generateInvalidPhoneNumberOrEmail());
 
         assertAll(
                 () -> assertEquals(HttpStatus.SC_BAD_REQUEST, recoveryByPhoneNumber.getStatusCode()),
@@ -114,7 +114,7 @@ public class RecoveryFormTest {
 
     @Test
     public void checkRecoveryByEmailWithInvalidEmail() {
-        RecoveryByEmailForm recoveryByEmail = new RecoveryByEmailForm(generateInvalidPhoneNumber());
+        RecoveryByEmailForm recoveryByEmail = new RecoveryByEmailForm(generateInvalidPhoneNumberOrEmail());
 
         assertAll(
                 () -> assertEquals(HttpStatus.SC_BAD_REQUEST, recoveryByEmail.getStatusCode()),
