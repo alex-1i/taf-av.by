@@ -1,16 +1,9 @@
 package by.av.ui.pages.home.loginform.registrationform;
 
-import by.av.ui.driver.Driver;
+import by.av.ui.pages.home.HomePage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
-public class RegistrationForm {
-
-    private final WebDriver driver;
-
-    public RegistrationForm() {
-        driver = Driver.getDriver();
-    }
+public class RegistrationForm extends HomePage {
 
     public String getTitleRegistrationText() {
         return driver.findElement(By.xpath(RegistrationFormLocator.TITLE_REGISTRATION)).getText();
@@ -96,10 +89,6 @@ public class RegistrationForm {
         return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_REGISTRATION_BY_PHONE_NUMBER)).getDomAttribute("disabled") == null;
     }
 
-    public void clickButtonRegistrationByPhoneNumber() {
-        driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_REGISTRATION_BY_PHONE_NUMBER)).click();
-    }
-
     public String getChooseRegistrationByEmailText() {
         return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL)).getText();
     }
@@ -180,35 +169,11 @@ public class RegistrationForm {
         return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_REGISTRATION_BY_EMAIL)).getDomAttribute("disabled") == null;
     }
 
-    public void clickButtonRegistrationByEmail() {
-        driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_REGISTRATION_BY_EMAIL)).click();
-    }
-
     public String getButtonLoginText() {
         return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_LOGIN)).getText();
     }
 
     public void clickButtonLogin() {
         driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_LOGIN)).click();
-    }
-
-    public String getErrorMessageForNameByPhoneNumberText() {
-        return driver.findElement(By.xpath(RegistrationFormLocator.ERROR_MESSAGE_FOR_NAME_BY_PHONE_NUMBER)).getText();
-    }
-
-    public String getErrorMessageForPasswordForPhoneNumberText() {
-        return driver.findElement(By.xpath(RegistrationFormLocator.ERROR_MESSAGE_FOR_PASSWORD_FOR_PHONE_NUMBER)).getText();
-    }
-
-    public String getErrorMessageForNameByEmailText() {
-        return driver.findElement(By.xpath(RegistrationFormLocator.ERROR_MESSAGE_FOR_NAME_BY_EMAIL)).getText();
-    }
-
-    public String getErrorMessageForEmailText() {
-        return driver.findElement(By.xpath(RegistrationFormLocator.ERROR_MESSAGE_FOR_EMAIL)).getText();
-    }
-
-    public String getErrorMessageForPasswordForEmailText() {
-        return driver.findElement(By.xpath(RegistrationFormLocator.ERROR_MESSAGE_FOR_PASSWORD_FOR_EMAIL)).getText();
     }
 }

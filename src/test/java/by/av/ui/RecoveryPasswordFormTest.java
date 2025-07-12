@@ -42,6 +42,7 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
     @Test
     public void checkButtonSendByPhoneNumberEnabledAfterInputInvalidPhoneNumber() {
         recoveryPasswordForm.inputPhoneNumber(generateInvalidPhoneNumberOrEmail());
+        waitOfElement(RecoveryPasswordFormLocator.BUTTON_SEND_BY_PHONE_NUMBER);
         assertFalse(recoveryPasswordForm.isButtonSendByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_SEND));
     }
 
@@ -76,6 +77,7 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
 
     @Test
     public void checkTitleTextButtonsLabelAttributeOfRecoveryByEmailNames() {
+        waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL);
         recoveryPasswordForm.clickButtonRecoveryByEmail();
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL, "aria-selected", "true");
         assertAll(
