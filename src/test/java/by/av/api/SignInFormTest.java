@@ -1,10 +1,15 @@
 package by.av.api;
 
+import by.av.api.expectedMessages.ExpectedMessages;
+import by.av.api.signinform.SignInByEmailForm;
+import by.av.api.signinform.SignInByPhoneNumberForm;
 import com.github.javafaker.Faker;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static by.av.utils.Utils.generateInvalidPhoneNumber;
 import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,12 +22,12 @@ public class SignInFormTest {
         SignInByPhoneNumberForm signInForm = new SignInByPhoneNumberForm("", "", 0);
 
         assertAll(
-                () -> assertEquals(400, signInForm.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", signInForm.getMessage()),
-                () -> assertTrue(signInForm.getContextErrorPhone().contains("Заполните оба поля")),
-                () -> assertTrue(signInForm.getContextErrorPhoneNumber().contains("Это обязательное поле!")),
-                () -> assertTrue(signInForm.getContextErrorPhoneCountry().containsAll(List.of("Заполните поле", "Это обязательное поле!"))),
-                () -> assertEquals("Запрос не соответствует правилам валидации", signInForm.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, signInForm.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, signInForm.getMessage()),
+                () -> assertTrue(signInForm.getContextErrorPhone().contains(ExpectedMessages.FILL_IN_BOTH_FIELDS)),
+                () -> assertTrue(signInForm.getContextErrorPhoneNumber().contains(ExpectedMessages.REQUIRED_FIELD)),
+                () -> assertTrue(signInForm.getContextErrorPhoneCountry().containsAll(List.of(ExpectedMessages.FILL_IN_FIELD, ExpectedMessages.REQUIRED_FIELD))),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, signInForm.getMessageText())
         );
     }
 
@@ -31,11 +36,11 @@ public class SignInFormTest {
         SignInByPhoneNumberForm signInForm = new SignInByPhoneNumberForm("", "");
 
         assertAll(
-                () -> assertEquals(400, signInForm.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", signInForm.getMessage()),
-                () -> assertTrue(signInForm.getContextErrorPhone().contains("Заполните оба поля")),
-                () -> assertTrue(signInForm.getContextErrorPhoneNumber().contains("Это обязательное поле!")),
-                () -> assertEquals("Запрос не соответствует правилам валидации", signInForm.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, signInForm.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, signInForm.getMessage()),
+                () -> assertTrue(signInForm.getContextErrorPhone().contains(ExpectedMessages.FILL_IN_BOTH_FIELDS)),
+                () -> assertTrue(signInForm.getContextErrorPhoneNumber().contains(ExpectedMessages.REQUIRED_FIELD)),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, signInForm.getMessageText())
         );
     }
 
@@ -44,10 +49,10 @@ public class SignInFormTest {
         SignInByPhoneNumberForm signInForm = new SignInByPhoneNumberForm("", faker.internet().password());
 
         assertAll(
-                () -> assertEquals(400, signInForm.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", signInForm.getMessage()),
-                () -> assertTrue(signInForm.getContextErrorPhoneNumber().contains("Это обязательное поле!")),
-                () -> assertEquals("Запрос не соответствует правилам валидации", signInForm.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, signInForm.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, signInForm.getMessage()),
+                () -> assertTrue(signInForm.getContextErrorPhoneNumber().contains(ExpectedMessages.REQUIRED_FIELD)),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, signInForm.getMessageText())
         );
     }
 
@@ -56,10 +61,10 @@ public class SignInFormTest {
         SignInByPhoneNumberForm signInForm = new SignInByPhoneNumberForm(generatePhoneNumber(), "");
 
         assertAll(
-                () -> assertEquals(400, signInForm.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", signInForm.getMessage()),
-                () -> assertTrue(signInForm.getContextErrorPhone().contains("Заполните оба поля")),
-                () -> assertEquals("Запрос не соответствует правилам валидации", signInForm.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, signInForm.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, signInForm.getMessage()),
+                () -> assertTrue(signInForm.getContextErrorPhone().contains(ExpectedMessages.FILL_IN_BOTH_FIELDS)),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, signInForm.getMessageText())
         );
     }
 
@@ -68,10 +73,10 @@ public class SignInFormTest {
         SignInByPhoneNumberForm signInForm = new SignInByPhoneNumberForm(generatePhoneNumber(), faker.internet().password(), 2);
 
         assertAll(
-                () -> assertEquals(400, signInForm.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", signInForm.getMessage()),
-                () -> assertTrue(signInForm.getContextErrorPhoneNumber().contains("Неверно указан номер телефона")),
-                () -> assertEquals("Запрос не соответствует правилам валидации", signInForm.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, signInForm.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, signInForm.getMessage()),
+                () -> assertTrue(signInForm.getContextErrorPhoneNumber().contains(ExpectedMessages.PHONE_NUMBER_IS_INCORRECT)),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, signInForm.getMessageText())
         );
     }
 
@@ -80,21 +85,21 @@ public class SignInFormTest {
         SignInByPhoneNumberForm signInForm = new SignInByPhoneNumberForm(generatePhoneNumber(), faker.internet().password(), 5);
 
         assertAll(
-                () -> assertEquals(400, signInForm.getStatusCode()),
-                () -> assertEquals("exception.request.invalid", signInForm.getMessage()),
-                () -> assertEquals("Неверный запрос", signInForm.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, signInForm.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_REQUEST_INVALID, signInForm.getMessage()),
+                () -> assertEquals(ExpectedMessages.INVALID_REQUEST, signInForm.getMessageText())
         );
     }
 
     @Test
     public void checkSignInByPhoneNumberWithInvalidPhoneNumber() {
-        SignInByPhoneNumberForm signInForm = new SignInByPhoneNumberForm("1234567890", faker.internet().password());
+        SignInByPhoneNumberForm signInForm = new SignInByPhoneNumberForm(generateInvalidPhoneNumber(), faker.internet().password());
 
         assertAll(
-                () -> assertEquals(400, signInForm.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", signInForm.getMessage()),
-                () -> assertTrue(signInForm.getContextErrorPhoneNumber().contains("Неверно указан номер телефона")),
-                () -> assertEquals("Запрос не соответствует правилам валидации", signInForm.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, signInForm.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, signInForm.getMessage()),
+                () -> assertTrue(signInForm.getContextErrorPhoneNumber().contains(ExpectedMessages.PHONE_NUMBER_IS_INCORRECT)),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, signInForm.getMessageText())
         );
     }
 
@@ -103,9 +108,9 @@ public class SignInFormTest {
         SignInByPhoneNumberForm signInForm = new SignInByPhoneNumberForm(generatePhoneNumber(), faker.internet().password());
 
         assertAll(
-                () -> assertEquals(400, signInForm.getStatusCode()),
-                () -> assertEquals("exception.auth.invalid_sign_in_by_phone", signInForm.getMessage()),
-                () -> assertEquals("Неверный телефон или пароль. Если забыли пароль, восстановите его", signInForm.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, signInForm.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_AUTH_INVALID_SIGN_IN_BY_PHONE, signInForm.getMessage()),
+                () -> assertEquals(ExpectedMessages.INVALID_PHONE_OR_PASSWORD, signInForm.getMessageText())
         );
     }
 
@@ -114,10 +119,10 @@ public class SignInFormTest {
         SignInByEmailForm signInForm = new SignInByEmailForm("", "");
 
         assertAll(
-                () -> assertEquals(400, signInForm.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", signInForm.getMessage()),
-                () -> assertTrue(signInForm.getContextErrorLogin().contains("Заполните оба поля")),
-                () -> assertEquals("Запрос не соответствует правилам валидации", signInForm.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, signInForm.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, signInForm.getMessage()),
+                () -> assertTrue(signInForm.getContextErrorLogin().contains(ExpectedMessages.FILL_IN_BOTH_FIELDS)),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, signInForm.getMessageText())
         );
     }
 
@@ -126,10 +131,10 @@ public class SignInFormTest {
         SignInByEmailForm signInForm = new SignInByEmailForm("", faker.internet().password());
 
         assertAll(
-                () -> assertEquals(400, signInForm.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", signInForm.getMessage()),
-                () -> assertTrue(signInForm.getContextErrorLogin().contains("Заполните оба поля")),
-                () -> assertEquals("Запрос не соответствует правилам валидации", signInForm.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, signInForm.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, signInForm.getMessage()),
+                () -> assertTrue(signInForm.getContextErrorLogin().contains(ExpectedMessages.FILL_IN_BOTH_FIELDS)),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, signInForm.getMessageText())
         );
     }
 
@@ -138,10 +143,10 @@ public class SignInFormTest {
         SignInByEmailForm signInForm = new SignInByEmailForm(faker.internet().emailAddress(), "");
 
         assertAll(
-                () -> assertEquals(400, signInForm.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", signInForm.getMessage()),
-                () -> assertTrue(signInForm.getContextErrorLogin().contains("Заполните оба поля")),
-                () -> assertEquals("Запрос не соответствует правилам валидации", signInForm.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, signInForm.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, signInForm.getMessage()),
+                () -> assertTrue(signInForm.getContextErrorLogin().contains(ExpectedMessages.FILL_IN_BOTH_FIELDS)),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, signInForm.getMessageText())
         );
     }
 
@@ -150,9 +155,9 @@ public class SignInFormTest {
         SignInByEmailForm signInForm = new SignInByEmailForm(faker.internet().emailAddress(), faker.internet().password());
 
         assertAll(
-                () -> assertEquals(400, signInForm.getStatusCode()),
-                () -> assertEquals("exception.auth.invalid_sign_in", signInForm.getMessage()),
-                () -> assertEquals("Неверный логин или пароль. Если забыли пароль, восстановите его", signInForm.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, signInForm.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_AUTH_INVALID_SIGN_IN, signInForm.getMessage()),
+                () -> assertEquals(ExpectedMessages.INVALID_LOGIN_OR_PASSWORD, signInForm.getMessageText())
         );
     }
 }

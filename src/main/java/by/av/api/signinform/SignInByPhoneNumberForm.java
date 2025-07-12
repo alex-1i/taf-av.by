@@ -1,8 +1,10 @@
-package by.av.api;
+package by.av.api.signinform;
 
 import java.util.List;
 
 public class SignInByPhoneNumberForm extends SignInForm {
+
+    private static final String URL_SIGN_IN_BY_PHONE = URL_AUTH + "phone/sign-in";
 
     public SignInByPhoneNumberForm(String number, String password) {
         this(number, password, DEFAULT_COUNTRY_NUMBER);
@@ -16,7 +18,7 @@ public class SignInByPhoneNumberForm extends SignInForm {
                 "        \"number\": \"" + number + "\"\n" +
                 "    }\n" +
                 "}";
-        response = sendRequest("https://api.av.by/auth/phone/sign-in", body);
+        response = sendRequest(URL_SIGN_IN_BY_PHONE, body);
     }
 
     public List<String> getContextErrorPhone() {

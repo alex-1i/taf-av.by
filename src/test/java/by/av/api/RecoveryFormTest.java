@@ -1,10 +1,15 @@
 package by.av.api;
 
+import by.av.api.expectedMessages.ExpectedMessages;
+import by.av.api.recoveryform.RecoveryByEmailForm;
+import by.av.api.recoveryform.RecoveryByPhoneNumberForm;
 import com.github.javafaker.Faker;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static by.av.utils.Utils.generateInvalidPhoneNumber;
 import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,11 +22,11 @@ public class RecoveryFormTest {
         RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm("", 0);
 
         assertAll(
-                () -> assertEquals(400, recoveryByPhoneNumber.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", recoveryByPhoneNumber.getMessage()),
-                () -> assertTrue(recoveryByPhoneNumber.getContextErrorPhoneCountry().containsAll(List.of("Заполните поле", "Это обязательное поле!"))),
-                () -> assertTrue(recoveryByPhoneNumber.getContextErrorPhoneNumber().contains("Это обязательное поле!")),
-                () -> assertEquals("Запрос не соответствует правилам валидации", recoveryByPhoneNumber.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, recoveryByPhoneNumber.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, recoveryByPhoneNumber.getMessage()),
+                () -> assertTrue(recoveryByPhoneNumber.getContextErrorPhoneCountry().containsAll(List.of(ExpectedMessages.FILL_IN_FIELD, ExpectedMessages.REQUIRED_FIELD))),
+                () -> assertTrue(recoveryByPhoneNumber.getContextErrorPhoneNumber().contains(ExpectedMessages.REQUIRED_FIELD)),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, recoveryByPhoneNumber.getMessageText())
         );
     }
 
@@ -30,10 +35,10 @@ public class RecoveryFormTest {
         RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm("");
 
         assertAll(
-                () -> assertEquals(400, recoveryByPhoneNumber.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", recoveryByPhoneNumber.getMessage()),
-                () -> assertTrue(recoveryByPhoneNumber.getContextErrorPhoneNumber().contains("Это обязательное поле!")),
-                () -> assertEquals("Запрос не соответствует правилам валидации", recoveryByPhoneNumber.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, recoveryByPhoneNumber.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, recoveryByPhoneNumber.getMessage()),
+                () -> assertTrue(recoveryByPhoneNumber.getContextErrorPhoneNumber().contains(ExpectedMessages.REQUIRED_FIELD)),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, recoveryByPhoneNumber.getMessageText())
         );
     }
 
@@ -42,22 +47,22 @@ public class RecoveryFormTest {
         RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generatePhoneNumber(), 0);
 
         assertAll(
-                () -> assertEquals(400, recoveryByPhoneNumber.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", recoveryByPhoneNumber.getMessage()),
-                () -> assertTrue(recoveryByPhoneNumber.getContextErrorPhoneCountry().containsAll(List.of("Заполните поле", "Это обязательное поле!"))),
-                () -> assertEquals("Запрос не соответствует правилам валидации", recoveryByPhoneNumber.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, recoveryByPhoneNumber.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, recoveryByPhoneNumber.getMessage()),
+                () -> assertTrue(recoveryByPhoneNumber.getContextErrorPhoneCountry().containsAll(List.of(ExpectedMessages.FILL_IN_FIELD, ExpectedMessages.REQUIRED_FIELD))),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, recoveryByPhoneNumber.getMessageText())
         );
     }
 
     @Test
     public void checkRecoveryByPhoneNumberWithInvalidPhoneNumber() {
-        RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm("1234567890");
+        RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generateInvalidPhoneNumber());
 
         assertAll(
-                () -> assertEquals(400, recoveryByPhoneNumber.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", recoveryByPhoneNumber.getMessage()),
-                () -> assertTrue(recoveryByPhoneNumber.getContextErrorPhoneNumber().contains("Неверно указан номер телефона")),
-                () -> assertEquals("Запрос не соответствует правилам валидации", recoveryByPhoneNumber.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, recoveryByPhoneNumber.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, recoveryByPhoneNumber.getMessage()),
+                () -> assertTrue(recoveryByPhoneNumber.getContextErrorPhoneNumber().contains(ExpectedMessages.PHONE_NUMBER_IS_INCORRECT)),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, recoveryByPhoneNumber.getMessageText())
         );
     }
 
@@ -66,10 +71,10 @@ public class RecoveryFormTest {
         RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generatePhoneNumber(), 2);
 
         assertAll(
-                () -> assertEquals(400, recoveryByPhoneNumber.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", recoveryByPhoneNumber.getMessage()),
-                () -> assertTrue(recoveryByPhoneNumber.getContextErrorPhoneNumber().contains("Неверно указан номер телефона")),
-                () -> assertEquals("Запрос не соответствует правилам валидации", recoveryByPhoneNumber.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, recoveryByPhoneNumber.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, recoveryByPhoneNumber.getMessage()),
+                () -> assertTrue(recoveryByPhoneNumber.getContextErrorPhoneNumber().contains(ExpectedMessages.PHONE_NUMBER_IS_INCORRECT)),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, recoveryByPhoneNumber.getMessageText())
         );
     }
 
@@ -78,9 +83,9 @@ public class RecoveryFormTest {
         RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generatePhoneNumber(), 5);
 
         assertAll(
-                () -> assertEquals(400, recoveryByPhoneNumber.getStatusCode()),
-                () -> assertEquals("exception.request.invalid", recoveryByPhoneNumber.getMessage()),
-                () -> assertEquals("Неверный запрос", recoveryByPhoneNumber.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, recoveryByPhoneNumber.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_REQUEST_INVALID, recoveryByPhoneNumber.getMessage()),
+                () -> assertEquals(ExpectedMessages.INVALID_REQUEST, recoveryByPhoneNumber.getMessageText())
         );
     }
 
@@ -89,9 +94,9 @@ public class RecoveryFormTest {
         RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generatePhoneNumber());
 
         assertAll(
-                () -> assertEquals(400, recoveryByPhoneNumber.getStatusCode()),
-                () -> assertEquals("exception.auth.unknown_phone", recoveryByPhoneNumber.getMessage()),
-                () -> assertEquals("Такого пользователя у нас нет. Проверьте указанный номер", recoveryByPhoneNumber.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, recoveryByPhoneNumber.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_AUTH_UNKNOWN_PHONE, recoveryByPhoneNumber.getMessage()),
+                () -> assertEquals(ExpectedMessages.CHECK_PHONE_NUMBER, recoveryByPhoneNumber.getMessageText())
         );
     }
 
@@ -100,22 +105,22 @@ public class RecoveryFormTest {
         RecoveryByEmailForm recoveryByEmail = new RecoveryByEmailForm("");
 
         assertAll(
-                () -> assertEquals(400, recoveryByEmail.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", recoveryByEmail.getMessage()),
-                () -> assertTrue(recoveryByEmail.getContextErrorEmail().contains("Это обязательное поле!")),
-                () -> assertEquals("Запрос не соответствует правилам валидации", recoveryByEmail.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, recoveryByEmail.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, recoveryByEmail.getMessage()),
+                () -> assertTrue(recoveryByEmail.getContextErrorEmail().contains(ExpectedMessages.REQUIRED_FIELD)),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, recoveryByEmail.getMessageText())
         );
     }
 
     @Test
     public void checkRecoveryByEmailWithInvalidEmail() {
-        RecoveryByEmailForm recoveryByEmail = new RecoveryByEmailForm("123");
+        RecoveryByEmailForm recoveryByEmail = new RecoveryByEmailForm(generateInvalidPhoneNumber());
 
         assertAll(
-                () -> assertEquals(400, recoveryByEmail.getStatusCode()),
-                () -> assertEquals("exception.validation.failed", recoveryByEmail.getMessage()),
-                () -> assertTrue(recoveryByEmail.getContextErrorEmail().contains("Введите почту полностью. Например, info@av.by")),
-                () -> assertEquals("Запрос не соответствует правилам валидации", recoveryByEmail.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, recoveryByEmail.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_VALIDATION_FAILED, recoveryByEmail.getMessage()),
+                () -> assertTrue(recoveryByEmail.getContextErrorEmail().contains(ExpectedMessages.INPUT_FULL_EMAIL)),
+                () -> assertEquals(ExpectedMessages.REQUEST_DOES_NOT_MEET_VALIDATION_RULES, recoveryByEmail.getMessageText())
         );
     }
 
@@ -124,9 +129,9 @@ public class RecoveryFormTest {
         RecoveryByEmailForm recoveryByEmail = new RecoveryByEmailForm(faker.internet().emailAddress());
 
         assertAll(
-                () -> assertEquals(400, recoveryByEmail.getStatusCode()),
-                () -> assertEquals("exception.auth.unknown_email", recoveryByEmail.getMessage()),
-                () -> assertEquals("Такого пользователя у нас нет. Проверьте указанную почту", recoveryByEmail.getMessageText())
+                () -> assertEquals(HttpStatus.SC_BAD_REQUEST, recoveryByEmail.getStatusCode()),
+                () -> assertEquals(ExpectedMessages.EXCEPTION_AUTH_UNKNOWN_EMAIL, recoveryByEmail.getMessage()),
+                () -> assertEquals(ExpectedMessages.CHECK_EMAIL, recoveryByEmail.getMessageText())
         );
     }
 }
