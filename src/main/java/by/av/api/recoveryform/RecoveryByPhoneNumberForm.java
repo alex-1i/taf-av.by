@@ -1,6 +1,10 @@
-package by.av.api;
+package by.av.api.recoveryform;
+
+import by.av.api.signinform.SignInForm;
 
 public class RecoveryByPhoneNumberForm extends SignInForm {
+
+    private static final String URL_RECOVERY_BY_PHONE = URL_AUTH + "phone/password-reset-request";
 
     public RecoveryByPhoneNumberForm(String number) {
         this(number, DEFAULT_COUNTRY_NUMBER);
@@ -8,6 +12,6 @@ public class RecoveryByPhoneNumberForm extends SignInForm {
 
     public RecoveryByPhoneNumberForm(String number, int countryNumber) {
         String body = "{\"phone\":{\"country\":" + countryNumber + ",\"number\":\"" + number + "\"}}";
-        response = sendRequest("https://api.av.by/auth/phone/password-reset-request", body);
+        response = sendRequest(URL_RECOVERY_BY_PHONE, body);
     }
 }

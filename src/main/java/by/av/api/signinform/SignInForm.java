@@ -1,4 +1,4 @@
-package by.av.api;
+package by.av.api.signinform;
 
 import io.restassured.response.Response;
 
@@ -9,6 +9,7 @@ import static io.restassured.RestAssured.given;
 public abstract class SignInForm {
     protected Response response;
     protected static final int DEFAULT_COUNTRY_NUMBER = 1;
+    protected static final String URL_AUTH = "https://api.av.by/auth/";
 
     protected Response sendRequest(String url, String body) {
         return given()
