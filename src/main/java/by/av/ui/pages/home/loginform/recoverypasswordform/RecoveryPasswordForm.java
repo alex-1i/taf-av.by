@@ -1,6 +1,7 @@
 package by.av.ui.pages.home.loginform.recoverypasswordform;
 
 import by.av.ui.pages.home.HomePage;
+import by.av.ui.pages.home.HomePageLocator;
 import org.openqa.selenium.By;
 
 public class RecoveryPasswordForm extends HomePage {
@@ -26,7 +27,7 @@ public class RecoveryPasswordForm extends HomePage {
     }
 
     public String getButtonRecoveryByPhoneNumberAttributeAriaSelectedValue() {
-        return driver.findElement(By.xpath(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_PHONE_NUMBER)).getDomAttribute("aria-selected");
+        return driver.findElement(By.xpath(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_PHONE_NUMBER)).getDomAttribute(HomePageLocator.ATTRIBUTE_ARIA_SELECTED);
     }
 
     public String getTextRecoveryByPhoneNumber() {
@@ -50,7 +51,7 @@ public class RecoveryPasswordForm extends HomePage {
     }
 
     public boolean isButtonSendByPhoneNumberEnabled() {
-        return driver.findElement(By.xpath(RecoveryPasswordFormLocator.BUTTON_SEND_BY_PHONE_NUMBER)).getDomAttribute("disabled") == null;
+        return driver.findElement(By.xpath(RecoveryPasswordFormLocator.BUTTON_SEND_BY_PHONE_NUMBER)).getDomAttribute(HomePageLocator.ATTRIBUTE_DISABLED) == null;
     }
 
     public String getButtonRecoveryByEmailText() {
@@ -62,7 +63,7 @@ public class RecoveryPasswordForm extends HomePage {
     }
 
     public String getButtonRecoveryByEmailAttributeAriaSelectedValue() {
-        return driver.findElement(By.xpath(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL)).getDomAttribute("aria-selected");
+        return driver.findElement(By.xpath(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL)).getDomAttribute(HomePageLocator.ATTRIBUTE_ARIA_SELECTED);
     }
 
     public String getTextRecoveryByPEmail() {
@@ -86,6 +87,6 @@ public class RecoveryPasswordForm extends HomePage {
     }
 
     public boolean isButtonSendByEmailEnabled() {
-        return driver.findElement(By.xpath(RecoveryPasswordFormLocator.BUTTON_SEND_BY_EMAIL)).getDomAttribute("disabled") == null;
+        return driver.findElement(By.xpath(RecoveryPasswordFormLocator.BUTTON_SEND_BY_EMAIL)).getDomAttribute(HomePageLocator.ATTRIBUTE_DISABLED) == null;
     }
 }

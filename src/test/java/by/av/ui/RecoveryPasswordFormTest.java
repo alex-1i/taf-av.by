@@ -1,6 +1,7 @@
 package by.av.ui;
 
 import by.av.ui.expectedMessages.ExpectedMessages;
+import by.av.ui.pages.home.HomePageLocator;
 import by.av.ui.pages.home.loginform.LoginFormLocator;
 import by.av.ui.pages.home.loginform.recoverypasswordform.RecoveryPasswordForm;
 import by.av.ui.pages.home.loginform.recoverypasswordform.RecoveryPasswordFormLocator;
@@ -79,7 +80,7 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
     public void checkTitleTextButtonsLabelAttributeOfRecoveryByEmailNames() {
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL);
         recoveryPasswordForm.clickButtonRecoveryByEmail();
-        waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL, "aria-selected", "true");
+        waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL, HomePageLocator.ATTRIBUTE_ARIA_SELECTED, HomePageLocator.ATTRIBUTE_ACTIVE);
         assertAll(
                 () -> assertEquals(ExpectedMessages.TITLE_LOGIN, recoveryPasswordForm.getButtonLoginText()),
                 () -> assertEquals(ExpectedMessages.TITLE_RECOVERY_PASSWORD, recoveryPasswordForm.getTitleRecoveryPasswordFormText()),
@@ -122,7 +123,7 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
 
     @Test
     public void checkClickButtonLoginReturnToLoginForm() {
-        waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_PHONE_NUMBER, "aria-selected", "true");
+        waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_PHONE_NUMBER, HomePageLocator.ATTRIBUTE_ARIA_SELECTED, HomePageLocator.ATTRIBUTE_ACTIVE);
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_LOGIN);
         recoveryPasswordForm.clickButtonLogin();
         waitOfElement(LoginFormLocator.TITLE_LOGIN_FORM);

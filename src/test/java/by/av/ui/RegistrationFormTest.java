@@ -1,6 +1,7 @@
 package by.av.ui;
 
 import by.av.ui.expectedMessages.ExpectedMessages;
+import by.av.ui.pages.home.HomePageLocator;
 import by.av.ui.pages.home.loginform.LoginFormLocator;
 import by.av.ui.pages.home.loginform.registrationform.RegistrationForm;
 import by.av.ui.pages.home.loginform.registrationform.RegistrationFormLocator;
@@ -47,7 +48,7 @@ public class RegistrationFormTest extends WithLoginSetUp {
     public void checkButtonInverterForPhoneNumber() {
         waitOfElement(RegistrationFormLocator.BUTTON_INVERTER_FOR_PHONE_NUMBER);
         registrationForm.clickButtonInvertForPhoneNumber();
-        waitOfElement(RegistrationFormLocator.BUTTON_INVERTER_FOR_PHONE_NUMBER, "aria-pressed", "true");
+        waitOfElement(RegistrationFormLocator.BUTTON_INVERTER_FOR_PHONE_NUMBER, HomePageLocator.ATTRIBUTE_ARIA_PRESSED, HomePageLocator.ATTRIBUTE_ACTIVE);
         assertAll(
                 () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, registrationForm.getButtonInvertForPhoneNumberAttributeAriaPressedValue()),
                 () -> assertEquals(ExpectedMessages.PASSWORD_VISIBLE, registrationForm.getInputPasswordForPhoneNumberAttributeTypeValue())
@@ -142,7 +143,7 @@ public class RegistrationFormTest extends WithLoginSetUp {
     public void checkButtonInverterForEmail() {
         waitOfElement(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL);
         registrationForm.clickChooseRegistrationByEmail();
-        waitOfElement(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL, "aria-selected", "true");
+        waitOfElement(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL, HomePageLocator.ATTRIBUTE_ARIA_SELECTED, HomePageLocator.ATTRIBUTE_ACTIVE);
         waitOfElementToBeClickable(RegistrationFormLocator.BUTTON_INVERTER_FOR_EMAIL);
         registrationForm.clickButtonInvertForEmail();
         assertAll(

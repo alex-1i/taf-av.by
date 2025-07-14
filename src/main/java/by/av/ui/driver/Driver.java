@@ -8,6 +8,7 @@ import java.time.Duration;
 public class Driver {
 
     private static WebDriver driver;
+    public static final int DEFAULT_WAIT_OF_SECONDS = 10;
 
     private Driver() {
     }
@@ -16,7 +17,7 @@ public class Driver {
         if (driver == null) {
             driver = new ChromeDriver();
             driver.manage().window().maximize();
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(DEFAULT_WAIT_OF_SECONDS));
         }
         return driver;
     }

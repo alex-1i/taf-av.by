@@ -1,6 +1,7 @@
 package by.av.ui.pages.home.loginform.registrationform;
 
 import by.av.ui.pages.home.HomePage;
+import by.av.ui.pages.home.HomePageLocator;
 import org.openqa.selenium.By;
 
 public class RegistrationForm extends HomePage {
@@ -18,7 +19,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public String getChooseRegistrationByPhoneNumberAttributeAriaSelectedValue() {
-        return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_PHONE_NUMBER)).getDomAttribute("aria-selected");
+        return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_PHONE_NUMBER)).getDomAttribute(HomePageLocator.ATTRIBUTE_ARIA_SELECTED);
     }
 
     public String getLabelNameByPhoneNumberText() {
@@ -46,7 +47,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public String getButtonInvertForPhoneNumberAttributeAriaPressedValue() {
-        return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_INVERTER_FOR_PHONE_NUMBER)).getDomAttribute("aria-pressed");
+        return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_INVERTER_FOR_PHONE_NUMBER)).getDomAttribute(HomePageLocator.ATTRIBUTE_ARIA_PRESSED);
     }
 
     public void inputPasswordForPhoneNumber(String password) {
@@ -74,7 +75,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public String getInputPasswordForPhoneNumberAttributeTypeValue() {
-        return driver.findElement(By.xpath(RegistrationFormLocator.INPUT_PASSWORD_FOR_PHONE_NUMBER)).getDomAttribute("type");
+        return driver.findElement(By.xpath(RegistrationFormLocator.INPUT_PASSWORD_FOR_PHONE_NUMBER)).getDomAttribute(HomePageLocator.ATTRIBUTE_TYPE);
     }
 
     public String getWarnMessageForPasswordForPhoneNumberText() {
@@ -86,7 +87,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public boolean isButtonRegistrationByPhoneNumberEnabled() {
-        return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_REGISTRATION_BY_PHONE_NUMBER)).getDomAttribute("disabled") == null;
+        return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_REGISTRATION_BY_PHONE_NUMBER)).getDomAttribute(HomePageLocator.ATTRIBUTE_DISABLED) == null;
     }
 
     public String getChooseRegistrationByEmailText() {
@@ -98,7 +99,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public String getChooseRegistrationByEmailAttributeAriaSelectedValue() {
-        return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL)).getDomAttribute("aria-selected");
+        return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL)).getDomAttribute(HomePageLocator.ATTRIBUTE_ARIA_SELECTED);
     }
 
     public String getLabelNameByEmailText() {
@@ -126,7 +127,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public String getButtonInvertForEmailAttributeAriaPressedValue() {
-        return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_INVERTER_FOR_EMAIL)).getDomAttribute("aria-pressed");
+        return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_INVERTER_FOR_EMAIL)).getDomAttribute(HomePageLocator.ATTRIBUTE_ARIA_PRESSED);
     }
 
     public void inputPasswordForEmail(String password) {
@@ -154,7 +155,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public String getInputPasswordForEmailAttributeTypeValue() {
-        return driver.findElement(By.xpath(RegistrationFormLocator.INPUT_PASSWORD_FOR_EMAIL)).getDomAttribute("type");
+        return driver.findElement(By.xpath(RegistrationFormLocator.INPUT_PASSWORD_FOR_EMAIL)).getDomAttribute(HomePageLocator.ATTRIBUTE_TYPE);
     }
 
     public String getWarnMessageForPasswordForEmailText() {
@@ -166,7 +167,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public boolean isButtonRegistrationByEmailEnabled() {
-        return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_REGISTRATION_BY_EMAIL)).getDomAttribute("disabled") == null;
+        return driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_REGISTRATION_BY_EMAIL)).getDomAttribute(HomePageLocator.ATTRIBUTE_DISABLED) == null;
     }
 
     public String getButtonLoginText() {
