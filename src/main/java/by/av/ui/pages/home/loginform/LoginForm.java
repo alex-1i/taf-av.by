@@ -1,16 +1,17 @@
 package by.av.ui.pages.home.loginform;
 
 import by.av.ui.pages.home.HomePage;
+import by.av.ui.pages.home.HomePageLocator;
 import org.openqa.selenium.By;
 
 public class LoginForm extends HomePage {
 
     public String getLoginFormOpenedAttributeAriaHiddenValue() {
-        return driver.findElement(By.xpath(LoginFormLocator.LOGIN_FORM_OPENED)).getDomAttribute("aria-hidden");
+        return driver.findElement(By.xpath(LoginFormLocator.LOGIN_FORM_OPENED)).getDomAttribute(HomePageLocator.ATTRIBUTE_ARIA_HIDDEN);
     }
 
     public String getLoginFormClosedAttributeAriaHiddenValue() {
-        return driver.findElement(By.xpath(LoginFormLocator.LOGIN_FORM_CLOSED)).getDomAttribute("aria-hidden");
+        return driver.findElement(By.xpath(LoginFormLocator.LOGIN_FORM_CLOSED)).getDomAttribute(HomePageLocator.ATTRIBUTE_ARIA_HIDDEN);
     }
 
     public void clickButtonCross() {
@@ -30,7 +31,7 @@ public class LoginForm extends HomePage {
     }
 
     public String getButtonLoginByPhoneNumberAttributeAriaSelectedValue() {
-        return driver.findElement(By.xpath(LoginFormLocator.BUTTON_LOGIN_BY_PHONE_NUMBER)).getDomAttribute("aria-selected");
+        return driver.findElement(By.xpath(LoginFormLocator.BUTTON_LOGIN_BY_PHONE_NUMBER)).getDomAttribute(HomePageLocator.ATTRIBUTE_ARIA_SELECTED);
     }
 
     public String getLabelPhoneNumberText() {
@@ -50,7 +51,7 @@ public class LoginForm extends HomePage {
     }
 
     public String getButtonInvertAttributeAriaPressedValue() {
-        return driver.findElement(By.xpath(LoginFormLocator.BUTTON_INVERTER)).getDomAttribute("aria-pressed");
+        return driver.findElement(By.xpath(LoginFormLocator.BUTTON_INVERTER)).getDomAttribute(HomePageLocator.ATTRIBUTE_ARIA_PRESSED);
     }
 
     public void inputPasswordForPhoneNumber(String password) {
@@ -63,7 +64,7 @@ public class LoginForm extends HomePage {
     }
 
     public String getInputPasswordForPhoneNumberAttributeTypeValue() {
-        return driver.findElement(By.xpath(LoginFormLocator.INPUT_PASSWORD_FOR_PHONE_NUMBER)).getDomAttribute("type");
+        return driver.findElement(By.xpath(LoginFormLocator.INPUT_PASSWORD_FOR_PHONE_NUMBER)).getDomAttribute(HomePageLocator.ATTRIBUTE_TYPE);
     }
 
     public String getButtonLoginByEmailOrLoginText() {
@@ -75,7 +76,7 @@ public class LoginForm extends HomePage {
     }
 
     public String getButtonLoginByEmailOrLoginAttributeAriaSelectedValue() {
-        return driver.findElement(By.xpath(LoginFormLocator.BUTTON_LOGIN_BY_EMAIL_OR_LOGIN)).getDomAttribute("aria-selected");
+        return driver.findElement(By.xpath(LoginFormLocator.BUTTON_LOGIN_BY_EMAIL_OR_LOGIN)).getDomAttribute(HomePageLocator.ATTRIBUTE_ARIA_SELECTED);
     }
 
     public String getLabelEmailOrLoginText() {
@@ -100,7 +101,7 @@ public class LoginForm extends HomePage {
     }
 
     public String getInputPasswordForEmailOrLoginAttributeATypeValue() {
-        return driver.findElement(By.xpath(LoginFormLocator.INPUT_PASSWORD_FOR_EMAIL_OR_LOGIN)).getDomAttribute("type");
+        return driver.findElement(By.xpath(LoginFormLocator.INPUT_PASSWORD_FOR_EMAIL_OR_LOGIN)).getDomAttribute(HomePageLocator.ATTRIBUTE_TYPE);
     }
 
     public String getButtonRecoveryPasswordText() {
@@ -120,7 +121,7 @@ public class LoginForm extends HomePage {
     }
 
     public boolean isButtonLoginEnabled() {
-        return driver.findElement(By.xpath(LoginFormLocator.BUTTON_LOGIN)).getDomAttribute("disabled") == null;
+        return driver.findElement(By.xpath(LoginFormLocator.BUTTON_LOGIN)).getDomAttribute(HomePageLocator.ATTRIBUTE_DISABLED) == null;
     }
 
     public String getButtonRegistrationText() {

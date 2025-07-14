@@ -22,14 +22,14 @@ abstract class WithLoginSetUp extends HomeTest{
     }
 
     protected void waitOfElement(String locator) {
-        new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
+        new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(Driver.DEFAULT_WAIT_OF_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
     }
 
     protected void waitOfElement(String locator, String attribute, String attributeValue) {
-        new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10)).until(ExpectedConditions.attributeToBe(By.xpath(locator), attribute, attributeValue));
+        new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(Driver.DEFAULT_WAIT_OF_SECONDS)).until(ExpectedConditions.attributeToBe(By.xpath(locator), attribute, attributeValue));
     }
 
     protected void waitOfElementToBeClickable(String locator) {
-        new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.xpath(locator)));
+        new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(Driver.DEFAULT_WAIT_OF_SECONDS)).until(ExpectedConditions.elementToBeClickable(By.xpath(locator)));
     }
 }

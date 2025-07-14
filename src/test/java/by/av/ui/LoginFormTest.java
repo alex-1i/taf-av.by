@@ -1,6 +1,7 @@
 package by.av.ui;
 
 import by.av.ui.expectedMessages.ExpectedMessages;
+import by.av.ui.pages.home.HomePageLocator;
 import by.av.ui.pages.home.loginform.LoginFormLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -117,7 +118,7 @@ public class LoginFormTest extends WithLoginSetUp {
         loginForm.clickButtonLoginByEmailOrLogin();
         waitOfElement(LoginFormLocator.INPUT_PASSWORD_FOR_EMAIL_OR_LOGIN);
         loginForm.clickButtonInvert();
-        waitOfElement(LoginFormLocator.BUTTON_INVERTER, "aria-pressed", "true");
+        waitOfElement(LoginFormLocator.BUTTON_INVERTER, HomePageLocator.ATTRIBUTE_ARIA_PRESSED, HomePageLocator.ATTRIBUTE_ACTIVE);
         assertAll(
                 () -> assertEquals(ExpectedMessages.ACTIVE_ATTRIBUTE, loginForm.getButtonInvertAttributeAriaPressedValue()),
                 () -> assertEquals(ExpectedMessages.PASSWORD_VISIBLE, loginForm.getInputPasswordForEmailOrLoginAttributeATypeValue())
