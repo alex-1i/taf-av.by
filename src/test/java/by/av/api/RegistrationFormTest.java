@@ -3,6 +3,7 @@ package by.av.api;
 import by.av.api.expectedMessages.ExpectedMessages;
 import by.av.api.registrationform.RegistrationByEmailForm;
 import by.av.api.registrationform.RegistrationByPhoneNumberForm;
+import by.av.api.signinform.SignInForm;
 import com.github.javafaker.Faker;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,9 @@ import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RegistrationFormTest {
+
+    private static final int MINIMUM_INSUFFICIENT_PASSWORD_LENGTH = 2;
+    private static final int MAXIMUM_INSUFFICIENT_PASSWORD_LENGTH = 7;
 
     Faker faker = new Faker();
 
@@ -34,7 +38,7 @@ public class RegistrationFormTest {
 
     @Test
     public void checkRegistrationByPhoneNumberWithInvalidParameters() {
-        RegistrationByPhoneNumberForm registrationByPhoneNumberForm = new RegistrationByPhoneNumberForm(faker.name().firstName(), faker.internet().password(2, 7, false, false, false), 5, generateInvalidPhoneNumberOrEmail());
+        RegistrationByPhoneNumberForm registrationByPhoneNumberForm = new RegistrationByPhoneNumberForm(faker.name().firstName(), faker.internet().password(MINIMUM_INSUFFICIENT_PASSWORD_LENGTH, MAXIMUM_INSUFFICIENT_PASSWORD_LENGTH, false, false, false), SignInForm.WRONG_COUNTRY_NUMBER, generateInvalidPhoneNumberOrEmail());
 
         assertAll(
                 () -> assertEquals(HttpStatus.SC_BAD_REQUEST, registrationByPhoneNumberForm.getStatusCode()),
@@ -45,7 +49,7 @@ public class RegistrationFormTest {
 
     @Test
     public void checkRegistrationByPhoneNumberWithInvalidNameInvalidShortPasswordAndAnotherCountryNumber() {
-        RegistrationByPhoneNumberForm registrationByPhoneNumberForm = new RegistrationByPhoneNumberForm(faker.name().firstName(), faker.internet().password(2, 7, false, false, false), 2, generatePhoneNumber());
+        RegistrationByPhoneNumberForm registrationByPhoneNumberForm = new RegistrationByPhoneNumberForm(faker.name().firstName(), faker.internet().password(MINIMUM_INSUFFICIENT_PASSWORD_LENGTH, MAXIMUM_INSUFFICIENT_PASSWORD_LENGTH, false, false, false), SignInForm.ANOTHER_COUNTRY_NUMBER, generatePhoneNumber());
 
         assertAll(
                 () -> assertEquals(HttpStatus.SC_BAD_REQUEST, registrationByPhoneNumberForm.getStatusCode()),
@@ -87,7 +91,7 @@ public class RegistrationFormTest {
 
     @Test
     public void checkRegistrationByEmailWithInvalidEmailAndShortNameAndPassword() {
-        RegistrationByEmailForm registrationByEmailForm = new RegistrationByEmailForm(generateInvalidPhoneNumberOrEmail(), String.valueOf(faker.lorem().character()), faker.internet().password(2, 7));
+        RegistrationByEmailForm registrationByEmailForm = new RegistrationByEmailForm(generateInvalidPhoneNumberOrEmail(), String.valueOf(faker.lorem().character()), faker.internet().password(MINIMUM_INSUFFICIENT_PASSWORD_LENGTH, MAXIMUM_INSUFFICIENT_PASSWORD_LENGTH));
 
         assertAll(
                 () -> assertEquals(HttpStatus.SC_BAD_REQUEST, registrationByEmailForm.getStatusCode()),

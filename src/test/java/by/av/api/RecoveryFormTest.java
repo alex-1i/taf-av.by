@@ -3,6 +3,7 @@ package by.av.api;
 import by.av.api.expectedMessages.ExpectedMessages;
 import by.av.api.recoveryform.RecoveryByEmailForm;
 import by.av.api.recoveryform.RecoveryByPhoneNumberForm;
+import by.av.api.signinform.SignInForm;
 import com.github.javafaker.Faker;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
@@ -68,7 +69,7 @@ public class RecoveryFormTest {
 
     @Test
     public void checkRecoveryByPhoneNumberWithAnotherCountryNumber() {
-        RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generatePhoneNumber(), 2);
+        RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generatePhoneNumber(), SignInForm.ANOTHER_COUNTRY_NUMBER);
 
         assertAll(
                 () -> assertEquals(HttpStatus.SC_BAD_REQUEST, recoveryByPhoneNumber.getStatusCode()),
@@ -80,7 +81,7 @@ public class RecoveryFormTest {
 
     @Test
     public void checkRecoveryByPhoneNumberWithInvalidCountryNumber() {
-        RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generatePhoneNumber(), 5);
+        RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generatePhoneNumber(), SignInForm.WRONG_COUNTRY_NUMBER);
 
         assertAll(
                 () -> assertEquals(HttpStatus.SC_BAD_REQUEST, recoveryByPhoneNumber.getStatusCode()),
