@@ -8,8 +8,18 @@ import static io.restassured.RestAssured.given;
 
 public abstract class SignInForm {
     protected Response response;
-    protected static final int DEFAULT_COUNTRY_NUMBER = 1;
+    public static final int DEFAULT_COUNTRY_NUMBER = 1;
+    public static final int ANOTHER_COUNTRY_NUMBER = 2;
+    public static final int WRONG_COUNTRY_NUMBER = 5;
+
     protected static final String URL_AUTH = "https://api.av.by/auth/";
+    private static final String RESPONSE_MESSAGE = "message";
+    private static final String RESPONSE_MESSAGE_TEXT = "messageText";
+    private static final String RESPONSE_ERRORS_PHONE_COUNTRY = "context.errors['phone.country']";
+    private static final String RESPONSE_ERRORS_PHONE_NUMBER = "context.errors['phone.number']";
+    private static final String RESPONSE_ERRORS_PASSWORD = "context.errors['password']";
+    private static final String RESPONSE_ERRORS_NAME = "context.errors['name']";
+    private static final String RESPONSE_ERRORS_EMAIL = "context.errors['email']";
 
     protected Response sendRequest(String url, String body) {
         return given()
@@ -24,28 +34,28 @@ public abstract class SignInForm {
     }
 
     public String getMessage() {
-        return response.path("message");
+        return response.path(RESPONSE_MESSAGE);
     }
 
     public String getMessageText() {
-        return response.path("messageText");
+        return response.path(RESPONSE_MESSAGE_TEXT);
     }
 
     public List<String> getContextErrorPhoneCountry() {
-        return response.path("context.errors['phone.country']");
+        return response.path(RESPONSE_ERRORS_PHONE_COUNTRY);
     }
 
     public List<String> getContextErrorPhoneNumber() {
-        return response.path("context.errors['phone.number']");
+        return response.path(RESPONSE_ERRORS_PHONE_NUMBER);
     }
 
     public List<String> getContextErrorPassword() {
-        return response.path("context.errors['password']");
+        return response.path(RESPONSE_ERRORS_PASSWORD);
     }
 
-    public List<String> getContextErrorName() { return response.path("context.errors['name']"); }
+    public List<String> getContextErrorName() { return response.path(RESPONSE_ERRORS_NAME); }
 
     public List<String> getContextErrorEmail() {
-        return response.path("context.errors['email']");
+        return response.path(RESPONSE_ERRORS_EMAIL);
     }
 }

@@ -3,6 +3,7 @@ package by.av.api;
 import by.av.api.expectedMessages.ExpectedMessages;
 import by.av.api.signinform.SignInByEmailForm;
 import by.av.api.signinform.SignInByPhoneNumberForm;
+import by.av.api.signinform.SignInForm;
 import com.github.javafaker.Faker;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
@@ -70,7 +71,7 @@ public class SignInFormTest {
 
     @Test
     public void checkSignInByPhoneNumberWithAnotherCountryNumber() {
-        SignInByPhoneNumberForm signInForm = new SignInByPhoneNumberForm(generatePhoneNumber(), faker.internet().password(), 2);
+        SignInByPhoneNumberForm signInForm = new SignInByPhoneNumberForm(generatePhoneNumber(), faker.internet().password(), SignInForm.ANOTHER_COUNTRY_NUMBER);
 
         assertAll(
                 () -> assertEquals(HttpStatus.SC_BAD_REQUEST, signInForm.getStatusCode()),
@@ -82,7 +83,7 @@ public class SignInFormTest {
 
     @Test
     public void checkSignInByPhoneNumberWithInvalidCountryNumber() {
-        SignInByPhoneNumberForm signInForm = new SignInByPhoneNumberForm(generatePhoneNumber(), faker.internet().password(), 5);
+        SignInByPhoneNumberForm signInForm = new SignInByPhoneNumberForm(generatePhoneNumber(), faker.internet().password(), SignInForm.WRONG_COUNTRY_NUMBER);
 
         assertAll(
                 () -> assertEquals(HttpStatus.SC_BAD_REQUEST, signInForm.getStatusCode()),
