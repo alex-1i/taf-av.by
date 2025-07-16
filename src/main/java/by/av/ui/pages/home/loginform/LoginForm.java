@@ -15,6 +15,7 @@ public class LoginForm extends HomePage {
     }
 
     public void clickButtonCross() {
+        logger.info("Клик по кнопке \"Закрыть\"");
         driver.findElement(By.xpath(LoginFormLocator.BUTTON_CROSS)).click();
     }
 
@@ -27,6 +28,7 @@ public class LoginForm extends HomePage {
     }
 
     public void clickButtonLoginByPhoneNumber() {
+        logger.info("Клик по кнопке \"по номеру телефона\"");
         driver.findElement(By.xpath(LoginFormLocator.BUTTON_LOGIN_BY_PHONE_NUMBER)).click();
     }
 
@@ -39,6 +41,7 @@ public class LoginForm extends HomePage {
     }
 
     public void inputPhoneNumber(String phoneNumber) {
+        logger.info("Ввод номера телефона: {}", phoneNumber);
         driver.findElement(By.xpath(LoginFormLocator.INPUT_PHONE_NUMBER)).sendKeys(phoneNumber);
     }
 
@@ -47,6 +50,7 @@ public class LoginForm extends HomePage {
     }
 
     public void clickButtonInvert() {
+        logger.info("Клик по кнопке \"скрытия пароля\"");
         driver.findElement(By.xpath(LoginFormLocator.BUTTON_INVERTER)).click();
     }
 
@@ -55,6 +59,7 @@ public class LoginForm extends HomePage {
     }
 
     public void inputPasswordForPhoneNumber(String password) {
+        logger.info("Ввод пароля для номера телефона: {}", password);
         driver.findElement(By.xpath(LoginFormLocator.INPUT_PASSWORD_FOR_PHONE_NUMBER)).sendKeys(password);
     }
 
@@ -72,6 +77,7 @@ public class LoginForm extends HomePage {
     }
 
     public void clickButtonLoginByEmailOrLogin() {
+        logger.info("Клик по кнопке \"по почте или логину\"");
         driver.findElement(By.xpath(LoginFormLocator.BUTTON_LOGIN_BY_EMAIL_OR_LOGIN)).click();
     }
 
@@ -84,6 +90,7 @@ public class LoginForm extends HomePage {
     }
 
     public void inputEmailOrLogin(String emailOrLogin) {
+        logger.info("Ввод почты или логина: {}", emailOrLogin);
         driver.findElement(By.xpath(LoginFormLocator.INPUT_EMAIL_OR_LOGIN)).sendKeys(emailOrLogin);
     }
 
@@ -92,6 +99,7 @@ public class LoginForm extends HomePage {
     }
 
     public void inputPasswordForEmailOrLogin(String password) {
+        logger.info("Ввод пароля для почты или логина: {}", password);
         driver.findElement(By.xpath(LoginFormLocator.INPUT_PASSWORD_FOR_EMAIL_OR_LOGIN)).sendKeys(password);
     }
 
@@ -109,6 +117,7 @@ public class LoginForm extends HomePage {
     }
 
     public void clickButtonRecoveryPassword() {
+        logger.info("Клик по кнопке \"Восстановление пароля\"");
         driver.findElement(By.xpath(LoginFormLocator.BUTTON_RECOVERY_PASSWORD)).click();
     }
 
@@ -117,6 +126,7 @@ public class LoginForm extends HomePage {
     }
 
     public void clickButtonLogin() {
+        logger.info("Клик по кнопке \"Вход\"");
         driver.findElement(By.xpath(LoginFormLocator.BUTTON_LOGIN)).click();
     }
 
@@ -129,6 +139,7 @@ public class LoginForm extends HomePage {
     }
 
     public void clickButtonRegistration() {
+        logger.info("Клик по кнопке \"Регистрация\"");
         driver.findElement(By.xpath(LoginFormLocator.BUTTON_REGISTRATION)).click();
     }
 
