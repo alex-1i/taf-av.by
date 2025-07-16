@@ -11,6 +11,7 @@ public class RecoveryPasswordForm extends HomePage {
     }
 
     public void clickButtonLogin() {
+        logger.info("Клик по кнопке \"Вход\"");
         driver.findElement(By.xpath(RecoveryPasswordFormLocator.BUTTON_LOGIN)).click();
     }
 
@@ -23,6 +24,7 @@ public class RecoveryPasswordForm extends HomePage {
     }
 
     public void clickButtonRecoveryByPhoneNumber() {
+        logger.info("Клик по кнопке \"по номеру телефона\"");
         driver.findElement(By.xpath(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_PHONE_NUMBER)).click();
     }
 
@@ -39,6 +41,7 @@ public class RecoveryPasswordForm extends HomePage {
     }
 
     public void inputPhoneNumber(String phoneNumber) {
+        logger.info("Ввод номера телефона: {}", phoneNumber);
         driver.findElement(By.xpath(RecoveryPasswordFormLocator.INPUT_PHONE_NUMBER)).sendKeys(phoneNumber);
     }
 
@@ -47,6 +50,7 @@ public class RecoveryPasswordForm extends HomePage {
     }
 
     public void clickButtonSendByPhoneNumber() {
+        logger.info("Клик по кнопке \"Восстановить по номеру телефона\"");
         driver.findElement(By.xpath(RecoveryPasswordFormLocator.BUTTON_SEND_BY_PHONE_NUMBER)).click();
     }
 
@@ -59,6 +63,7 @@ public class RecoveryPasswordForm extends HomePage {
     }
 
     public void clickButtonRecoveryByEmail() {
+        logger.info("Клик по кнопке \"по почте\"");
         driver.findElement(By.xpath(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL)).click();
     }
 
@@ -75,6 +80,7 @@ public class RecoveryPasswordForm extends HomePage {
     }
 
     public void inputEmail(String email) {
+        logger.info("Ввод почты: {}", email);
         driver.findElement(By.xpath(RecoveryPasswordFormLocator.INPUT_EMAIL)).sendKeys(email);
     }
 
@@ -83,6 +89,7 @@ public class RecoveryPasswordForm extends HomePage {
     }
 
     public void clickButtonSendByEmail() {
+        logger.info("Клик по кнопке \"Восстановить по почте\"");
         driver.findElement(By.xpath(RecoveryPasswordFormLocator.BUTTON_SEND_BY_EMAIL)).click();
     }
 

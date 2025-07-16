@@ -50,7 +50,7 @@ public class LoginForm extends HomePage {
     }
 
     public void clickButtonInvert() {
-        logger.info("Клик по кнопке \"скрытия пароля\"");
+        logger.info("Клик по кнопке \"скрытие пароля\"");
         driver.findElement(By.xpath(LoginFormLocator.BUTTON_INVERTER)).click();
     }
 
