@@ -15,6 +15,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public void clickChooseRegistrationByPhoneNumber() {
+        logger.info("Клик по кнопке \"по номеру телефона\"");
         driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_PHONE_NUMBER)).click();
     }
 
@@ -27,6 +28,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public void inputNameByPhoneNumber(String name) {
+        logger.info("Ввод имени: {}", name);
         driver.findElement(By.xpath(RegistrationFormLocator.INPUT_NAME_BY_PHONE_NUMBER)).sendKeys(name);
     }
 
@@ -35,6 +37,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public void inputPhoneNumber(String phoneNumber) {
+        logger.info("Ввод номера телефона: {}", phoneNumber);
         driver.findElement(By.xpath(RegistrationFormLocator.INPUT_PHONE_NUMBER)).sendKeys(phoneNumber);
     }
 
@@ -43,6 +46,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public void clickButtonInvertForPhoneNumber() {
+        logger.info("Клик по кнопке \"скрытие пароля\"");
         driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_INVERTER_FOR_PHONE_NUMBER)).click();
     }
 
@@ -51,6 +55,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public void inputPasswordForPhoneNumber(String password) {
+        logger.info("Ввод пароля для номера телефона: {}", password);
         driver.findElement(By.xpath(RegistrationFormLocator.INPUT_PASSWORD_FOR_PHONE_NUMBER)).sendKeys(password);
     }
 
@@ -95,6 +100,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public void clickChooseRegistrationByEmail() {
+        logger.info("Клик по кнопке \"по почте\"");
         driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_CHOOSE_REGISTRATION_BY_EMAIL)).click();
     }
 
@@ -107,6 +113,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public void inputNameByEmail(String name) {
+        logger.info("Ввод имени: {}", name);
         driver.findElement(By.xpath(RegistrationFormLocator.INPUT_NAME_BY_EMAIL)).sendKeys(name);
     }
 
@@ -115,6 +122,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public void inputEmail(String email) {
+        logger.info("Ввод почты: {}", email);
         driver.findElement(By.xpath(RegistrationFormLocator.INPUT_EMAIL)).sendKeys(email);
     }
 
@@ -123,6 +131,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public void clickButtonInvertForEmail() {
+        logger.info("Клик по кнопке \"скрытие пароля\"");
         driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_INVERTER_FOR_EMAIL)).click();
     }
 
@@ -131,6 +140,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public void inputPasswordForEmail(String password) {
+        logger.info("Ввод пароля для почты: {}", password);
         driver.findElement(By.xpath(RegistrationFormLocator.INPUT_PASSWORD_FOR_EMAIL)).sendKeys(password);
     }
 
@@ -175,6 +185,7 @@ public class RegistrationForm extends HomePage {
     }
 
     public void clickButtonLogin() {
+        logger.info("Клик по кнопке \"Вход\"");
         driver.findElement(By.xpath(RegistrationFormLocator.BUTTON_LOGIN)).click();
     }
 }
