@@ -6,6 +6,7 @@ import by.av.ui.pages.home.loginform.LoginFormLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static by.av.ui.driver.Waiter.waitOfElement;
 import static by.av.utils.Utils.generateInvalidPhoneNumberOrEmail;
 import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
