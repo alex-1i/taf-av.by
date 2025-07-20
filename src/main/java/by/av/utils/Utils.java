@@ -4,7 +4,10 @@ import java.util.Random;
 
 public class Utils {
 
-    static Random random = new Random();
+    private static final Random random = new Random();
+
+    private Utils() {
+    }
 
     public static String generatePhoneNumber() {
         final String[] ARRAY_PREFIX = {"25", "29", "33", "44"};
@@ -22,11 +25,11 @@ public class Utils {
         return number.toString();
     }
 
-    public static String generateInvalidPhoneNumberOrEmail() {
+    public static String generateInvalidInputData() {
         StringBuilder number = new StringBuilder();
 
         // генерируем число, состоящее из 10 цифр
-        for (int i = 1; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             // берём любое число от 0 до 9
             number.append(random.nextInt(10));
         }

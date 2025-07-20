@@ -30,6 +30,7 @@ public class ExpectedMessages {
     public static final String WARN_MESSAGE_FOR_PASSWORD = "Не короче 8 символов и только латиница и цифры";
     public static final String BUTTON_REGISTRATION = "Зарегистрироваться";
     public static final String BUTTON_LOGIN_FORM = "Вход\nдля тех, кто уже зарегистрирован";
+    public static final String TEXT_FAILED_SEARCH = "Ничего подходящего у нас нет. Попробуйте другой запрос или проверьте написание текущего.";
 
     public static String getMessageButtonDisabled(String button) {
         return "Кнопка " + button + "должна быть неактивной";

@@ -35,4 +35,9 @@ public class HomePage {
         logger.info("Открытие формы логина");
         driver.findElement(By.xpath(HomePageLocator.BUTTON_LOGIN)).click();
     }
+
+    public void openServicePage() {
+        logger.info("Открытие страницы услуг");
+        driver.findElement(By.xpath(HomePageLocator.BUTTON_SERVICE)).click();
+    }
 }

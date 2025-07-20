@@ -1,0 +1,41 @@
+package by.av.ui;
+
+import by.av.ui.expectedMessages.ExpectedMessages;
+import by.av.ui.pages.service.ServicePageLocator;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static by.av.ui.driver.Waiter.waitOfNumberOfElements;
+import static by.av.utils.Utils.generateInvalidInputData;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class ServicePageTest extends WithServicePageSetUp{
+
+    @BeforeEach
+    public void setUp() {
+        openServicePage();
+    }
+
+    @Test
+    public void checkSearchResultAfterInputValidService() {
+        waitOfNumberOfElements(ServicePageLocator.LIST_OF_SERVICES, ServicePageLocator.DEFAULT_NUMBER_OF_SERVICES);
+        String service = servicePage.getRandomService();
+        servicePage.inputSearchInfoAndSubmit(service);
+
+        List<String> allCompaniesText = servicePage.getAllCompaniesText();
+        assertFalse(allCompaniesText.isEmpty(), "Список компаний пуст");
+
+        for (String companyText : allCompaniesText) {
+            assertTrue(companyText.toLowerCase().contains(service.toLowerCase()), "Компания не содержит искомый текст, текст компании: \n" + companyText);
+        }
+    }
+
+    @Test
+    public void checkSearchResultAfterInputInvalidService() {
+        servicePage.inputSearchInfo(generateInvalidInputData());
+
+        assertEquals(servicePage.getSearchResultText(), ExpectedMessages.TEXT_FAILED_SEARCH);
+    }
+}

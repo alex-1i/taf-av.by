@@ -18,4 +18,12 @@ public class Waiter {
     public static void waitOfElementToBeClickable(String locator) {
         new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(Driver.DEFAULT_WAIT_OF_SECONDS)).until(ExpectedConditions.elementToBeClickable(By.xpath(locator)));
     }
+
+    public static void waitOfNumberOfElements(String locator, int numberOfElements) {
+        new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(Driver.DEFAULT_WAIT_OF_SECONDS)).until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(locator), numberOfElements));
+    }
+
+    public static void waitUntilInputIsNotEmpty(String locator, String attribute) {
+        new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(Driver.DEFAULT_WAIT_OF_SECONDS)).until(ExpectedConditions.attributeToBeNotEmpty(Driver.getDriver().findElement(By.xpath(locator)), attribute));
+    }
 }

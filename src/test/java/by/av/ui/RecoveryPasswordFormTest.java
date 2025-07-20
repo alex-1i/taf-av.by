@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static by.av.ui.driver.Waiter.waitOfElement;
-import static by.av.utils.Utils.generateInvalidPhoneNumberOrEmail;
+import static by.av.utils.Utils.generateInvalidInputData;
 import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,7 +43,7 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
 
     @Test
     public void checkButtonSendByPhoneNumberEnabledAfterInputInvalidPhoneNumber() {
-        recoveryPasswordForm.inputPhoneNumber(generateInvalidPhoneNumberOrEmail());
+        recoveryPasswordForm.inputPhoneNumber(generateInvalidInputData());
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_SEND_BY_PHONE_NUMBER);
         assertFalse(recoveryPasswordForm.isButtonSendByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonDisabled(ExpectedMessages.BUTTON_SEND));
     }
@@ -100,7 +100,7 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
     public void checkClickButtonSendByEmailAfterInputAnyKeyInEmailField() {
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL);
         recoveryPasswordForm.clickButtonRecoveryByEmail();
-        recoveryPasswordForm.inputEmail(generateInvalidPhoneNumberOrEmail());
+        recoveryPasswordForm.inputEmail(generateInvalidInputData());
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL);
         recoveryPasswordForm.clickButtonSendByEmail();
         assertAll(

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static by.av.utils.Utils.generateInvalidPhoneNumberOrEmail;
+import static by.av.utils.Utils.generateInvalidInputData;
 import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -94,7 +94,7 @@ public class SignInFormTest {
 
     @Test
     public void checkSignInByPhoneNumberWithInvalidPhoneNumber() {
-        SignInByPhoneNumberForm signInForm = new SignInByPhoneNumberForm(generateInvalidPhoneNumberOrEmail(), faker.internet().password());
+        SignInByPhoneNumberForm signInForm = new SignInByPhoneNumberForm(generateInvalidInputData(), faker.internet().password());
 
         assertAll(
                 () -> assertEquals(HttpStatus.SC_BAD_REQUEST, signInForm.getStatusCode()),
