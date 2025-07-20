@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static by.av.ui.driver.Waiter.*;
 
@@ -57,14 +56,5 @@ public class ServicePage extends HomePage {
 
         logger.info("Всего услуг найдено: {}", serviceText.size());
         return serviceText;
-    }
-
-    public String getRandomService() {
-        List<String> services = getAllServiceText();
-        if (services.isEmpty()) {
-            throw new IllegalStateException("Список услуг пустой!");
-        }
-
-        return services.get(new Random().nextInt(getAllServiceText().size()));
     }
 }

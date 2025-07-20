@@ -1,5 +1,6 @@
 package by.av.utils;
 
+import java.util.List;
 import java.util.Random;
 
 public class Utils {
@@ -35,5 +36,13 @@ public class Utils {
         }
 
         return number.toString();
+    }
+
+    public static String getRandomService(List<String> services) {
+        if (services.isEmpty()) {
+            throw new IllegalStateException("Список услуг пустой!");
+        }
+
+        return services.get(new Random().nextInt(services.size()));
     }
 }
