@@ -9,6 +9,7 @@ import java.util.List;
 
 import static by.av.ui.driver.Waiter.waitOfNumberOfElements;
 import static by.av.utils.Utils.generateInvalidInputData;
+import static by.av.utils.Utils.getRandomService;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ServicePageTest extends WithServicePageSetUp{
@@ -21,7 +22,7 @@ public class ServicePageTest extends WithServicePageSetUp{
     @Test
     public void checkSearchResultAfterInputValidService() {
         waitOfNumberOfElements(ServicePageLocator.LIST_OF_SERVICES, ServicePageLocator.DEFAULT_NUMBER_OF_SERVICES);
-        String service = servicePage.getRandomService();
+        String service = getRandomService(servicePage.getAllServiceText());
         servicePage.inputSearchInfoAndSubmit(service);
 
         List<String> allCompaniesText = servicePage.getAllCompaniesText();
