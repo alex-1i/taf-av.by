@@ -1,6 +1,8 @@
 package by.av.utils;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class Utils {
@@ -44,5 +46,14 @@ public class Utils {
         }
 
         return services.get(new Random().nextInt(services.size()));
+    }
+
+    public static Map.Entry<String, String> getRandomService(Map<String, String> services) {
+        if (services.isEmpty()) {
+            throw new IllegalStateException("Список услуг пустой!");
+        }
+
+        List<Map.Entry<String, String>> entries = new ArrayList<>(services.entrySet());
+        return entries.get(new Random().nextInt(entries.size()));
     }
 }
