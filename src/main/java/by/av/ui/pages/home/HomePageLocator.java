@@ -11,4 +11,5 @@ public class HomePageLocator {
     public static final String ATTRIBUTE_TYPE = "type";
     public static final String ATTRIBUTE_DISABLED = "disabled";
     public static final String ATTRIBUTE_ACTIVE = "true";
+    public static final String BUTTON_SERVICE = "//a[@href=\"/company\"]";
 }
