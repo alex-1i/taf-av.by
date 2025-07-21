@@ -5,10 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,29 +18,17 @@ public class ServicePage extends HomePage {
         driver.findElement(By.xpath(ServicePageLocator.INPUT_SEARCH)).sendKeys(searchInfo);
     }
 
-//    public void inputSearchInfoAndSubmit(String searchInfo) {
-//        logger.info("Ввод в строку поиска и нажатие Enter: {}", searchInfo);
-//        driver.findElement(By.xpath(ServicePageLocator.INPUT_SEARCH)).sendKeys(searchInfo);
-//        waitUntilInputIsNotEmpty(ServicePageLocator.INPUT_SEARCH, ServicePageLocator.ATTRIBUTE);
-//        waitOfElementToBeClickable(ServicePageLocator.getActiveService(searchInfo));
-//        logger.info("Нажатие по кнопки компании: {}", searchInfo);
-//        driver.findElement(By.xpath(ServicePageLocator.getActiveService(searchInfo))).click();
-//    }
-
     public void inputSearchInfoAndSubmit(String searchInfo) {
         logger.info("Ввод в строку поиска и нажатие Enter: {}", searchInfo);
         driver.findElement(By.xpath(ServicePageLocator.INPUT_SEARCH)).sendKeys(searchInfo);
 
         waitUntilInputIsNotEmpty(ServicePageLocator.INPUT_SEARCH, ServicePageLocator.ATTRIBUTE);
 
-        By buttonLocator = By.xpath(ServicePageLocator.getActiveService(searchInfo));
+        String buttonLocator = ServicePageLocator.getActiveService(searchInfo);
+        waitUntilVisibleAndClickable(buttonLocator);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(buttonLocator));
-
+        WebElement button = driver.findElement(By.xpath(buttonLocator));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", button);
-
-        wait.until(ExpectedConditions.elementToBeClickable(button));
 
         logger.info("Нажатие по кнопке компании: {}", searchInfo);
         try {
