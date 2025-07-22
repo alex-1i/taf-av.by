@@ -13,6 +13,5 @@ abstract class WithServicePageSetUp extends HomeTest{
         servicePage = new ServicePage();
         servicePage.openServicePage();
         waitOfElement(ServicePageLocator.INPUT_SEARCH);
-
     }
 }

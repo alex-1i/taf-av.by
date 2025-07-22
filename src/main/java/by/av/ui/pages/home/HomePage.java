@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class HomePage {
+
     protected final WebDriver driver;
     protected final Logger logger = LogManager.getLogger(getClass());
 

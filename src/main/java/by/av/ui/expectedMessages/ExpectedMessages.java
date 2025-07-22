@@ -1,6 +1,7 @@
 package by.av.ui.expectedMessages;
 
 public class ExpectedMessages {
+
     public static final String TITLE_LOGIN = "Вход";
     public static final String INACTIVE_ATTRIBUTE = "false";
     public static final String ACTIVE_ATTRIBUTE = "true";

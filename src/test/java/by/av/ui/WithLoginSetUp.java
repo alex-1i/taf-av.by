@@ -12,6 +12,7 @@ abstract class WithLoginSetUp extends HomeTest{
 
     protected LoginForm loginForm;
     protected final Faker faker = new Faker();
+
     protected void openLoginForm() {
         new HomePage().openLoginForm();
         waitOfElement(LoginFormLocator.TITLE_LOGIN_FORM);

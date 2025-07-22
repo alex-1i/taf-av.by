@@ -12,26 +12,34 @@ public class Utils {
     private Utils() {
     }
 
+    /**
+     * Данный метод генерирует случайный номер телефона состоящий из префикса + номера телефона
+     * префикс выбирается случайно из массива ARRAY_PREFIX
+     * далее выбираем первую цифру номера, так как номер не может начинаться с 0, берём любое число от 0 до 8 и добавляем 1
+     * после перебором цикла выбираем оставшиеся 6 цифр от 0 до 9
+     * @return возвращаем строку в формате XXYYYYYYY
+     */
     public static String generatePhoneNumber() {
         final String[] ARRAY_PREFIX = {"25", "29", "33", "44"};
 
         StringBuilder number = new StringBuilder();
         number.append(ARRAY_PREFIX[random.nextInt(ARRAY_PREFIX.length)]);
-        // выбираем первую цифру номера, так как номер не может начинаться с 0, берём любое число от 0 до 8 и добавляем 1
         number.append(random.nextInt(9) + 1);
 
-        // выбираем оставшиеся 6 цифр номера
         for (int i = 0; i < 6; i++) {
-            // берём любое число от 0 до 9
             number.append(random.nextInt(10));
         }
         return number.toString();
     }
 
+    /**
+     * Данный метод генерирует строку, состоящую из 10 случайных цифр
+     * перебором цикла выбираем 10 цифр от 0 до 9
+     * @return возвращаем строку из 10 случайных цифр
+     */
     public static String generateInvalidInputData() {
         StringBuilder number = new StringBuilder();
 
-        // генерируем число, состоящее из 10 цифр
         for (int i = 0; i < 10; i++) {
             // берём любое число от 0 до 9
             number.append(random.nextInt(10));

@@ -167,7 +167,6 @@ public class LoginFormTest extends WithLoginSetUp {
         assertTrue(loginForm.isButtonLoginEnabled(), ExpectedMessages.getMessageButtonEnabled(ExpectedMessages.BUTTON_LOGIN));
     }
 
-
     @Test
     @DisplayName("Проверка активности кнопки входа и попытки авторизации по почте после ввода незарегистрированной почты или логина и пароля")
     public void checkClickButtonLoginEnabledAfterInputNonRegisteredEmailOrLoginAndInputPasswordForEmailOrLogin() {
