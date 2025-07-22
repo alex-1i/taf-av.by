@@ -10,6 +10,9 @@ public class RegistrationByPhoneNumberForm extends SignInForm {
     }
 
     public RegistrationByPhoneNumberForm(String name, String password, int countryNumber, String phoneNumber) {
+        logger.info("Создание запроса RegistrationByPhoneNumberForm");
+        logger.info("Вводимые данные — Name: {}, Password: {}, Country Code: {}, Phone Number: {}", name, password, countryNumber, phoneNumber);
+
         String body = "{\"name\":\"" + name + "\",\"password\":\"" + password + "\",\"phone\":{\"country\":" + countryNumber + ",\"number\":\"" + phoneNumber + "\"}}";
         response = sendRequest(URL_REGISTRATION_BY_PHONE, body);
     }

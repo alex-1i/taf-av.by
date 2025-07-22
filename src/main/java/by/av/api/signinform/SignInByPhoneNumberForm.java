@@ -12,6 +12,9 @@ public class SignInByPhoneNumberForm extends SignInForm {
     }
 
     public SignInByPhoneNumberForm(String number, String password, int countryNumber) {
+        logger.info("Создание запроса SignInByPhoneNumberForm");
+        logger.info("Вводимые данные — Номер: {}, Пароль: {}, Код страны: {}", number, password, countryNumber);
+
         String body = "{\n" +
                 "    \"password\": \"" + password + "\",\n" +
                 "    \"phone\": {\n" +
@@ -23,6 +26,8 @@ public class SignInByPhoneNumberForm extends SignInForm {
     }
 
     public List<String> getContextErrorPhone() {
-        return response.path(RESPONSE_ERRORS_PHONE);
+        List<String> errors = response.path(RESPONSE_ERRORS_PHONE);
+        logger.debug("Ошибки поля phone: {}", errors);
+        return errors;
     }
 }
