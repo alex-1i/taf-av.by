@@ -5,7 +5,10 @@ import by.av.ui.pages.home.HomePageLocator;
 import by.av.ui.pages.home.loginform.LoginFormLocator;
 import by.av.ui.pages.home.loginform.recoverypasswordform.RecoveryPasswordForm;
 import by.av.ui.pages.home.loginform.recoverypasswordform.RecoveryPasswordFormLocator;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static by.av.ui.driver.Waiter.waitOfElement;
@@ -13,6 +16,9 @@ import static by.av.utils.Utils.generateInvalidInputData;
 import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Epic("UI")
+@Feature("Проверка формы восстановления пароля")
+@DisplayName("Тесты формы восстановления пароля по номеру телефона и по почте")
 public class RecoveryPasswordFormTest extends WithLoginSetUp{
 
     private RecoveryPasswordForm recoveryPasswordForm;
@@ -26,6 +32,7 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
     }
 
     @Test
+    @DisplayName("Проверка наличия элементов формы восстановления пароля по номеру телефона")
     public void checkTitleTextButtonsLabelAttributeOfRecoveryByPhoneNumberNames() {
         assertAll(
                 () -> assertEquals(ExpectedMessages.TITLE_LOGIN, recoveryPasswordForm.getButtonLoginText()),
@@ -42,6 +49,7 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
     }
 
     @Test
+    @DisplayName("Проверка не активности кнопки восстановления пароля по номеру телефона после ввода невалидного номера телефона")
     public void checkButtonSendByPhoneNumberEnabledAfterInputInvalidPhoneNumber() {
         recoveryPasswordForm.inputPhoneNumber(generateInvalidInputData());
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_SEND_BY_PHONE_NUMBER);
@@ -49,12 +57,14 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
     }
 
     @Test
+    @DisplayName("Проверка активности кнопки восстановления пароля по номеру телефона после ввода номера телефона")
     public void checkButtonSendByPhoneNumberEnabledAfterInputPhoneNumber() {
         recoveryPasswordForm.inputPhoneNumber(generatePhoneNumber());
         assertTrue(recoveryPasswordForm.isButtonSendByPhoneNumberEnabled(), ExpectedMessages.getMessageButtonEnabled(ExpectedMessages.BUTTON_SEND));
     }
 
     @Test
+    @DisplayName("Проверка активности кнопки восстановления пароля и попытки восстановления по номеру телефона после ввода номера телефона")
     public void checkClickButtonSendByPhoneNumberEnabledAfterInputPhoneNumber() {
         checkButtonSendByPhoneNumberEnabledAfterInputPhoneNumber();
         recoveryPasswordForm.clickButtonSendByPhoneNumber();
@@ -63,6 +73,7 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
     }
 
     @Test
+    @DisplayName("Проверка переходов между формами восстановления пароля по телефону и по почте")
     public void checkReturnToRecoveryByPhoneNumberAfterGoToRecoveryByEmail() {
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL);
         recoveryPasswordForm.clickButtonRecoveryByEmail();
@@ -78,6 +89,7 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
     }
 
     @Test
+    @DisplayName("Проверка наличия элементов формы восстановления пароля по почте")
     public void checkTitleTextButtonsLabelAttributeOfRecoveryByEmailNames() {
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL);
         recoveryPasswordForm.clickButtonRecoveryByEmail();
@@ -97,6 +109,7 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
     }
 
     @Test
+    @DisplayName("Проверка активности кнопки восстановления и попытки восстановления пароля по почте после ввода невалидной почты")
     public void checkClickButtonSendByEmailAfterInputAnyKeyInEmailField() {
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL);
         recoveryPasswordForm.clickButtonRecoveryByEmail();
@@ -110,6 +123,7 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
     }
 
     @Test
+    @DisplayName("Проверка активности кнопки восстановления и попытки восстановления пароля по почте после ввода почты")
     public void checkClickButtonSendByEmailAfterInputEmail() {
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_EMAIL);
         recoveryPasswordForm.clickButtonRecoveryByEmail();
@@ -123,6 +137,7 @@ public class RecoveryPasswordFormTest extends WithLoginSetUp{
     }
 
     @Test
+    @DisplayName("Проверка кнопки возврата на форму входа")
     public void checkClickButtonLoginReturnToLoginForm() {
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_RECOVERY_BY_PHONE_NUMBER, HomePageLocator.ATTRIBUTE_ARIA_SELECTED, HomePageLocator.ATTRIBUTE_ACTIVE);
         waitOfElement(RecoveryPasswordFormLocator.BUTTON_LOGIN);

@@ -5,7 +5,10 @@ import by.av.api.recoveryform.RecoveryByEmailForm;
 import by.av.api.recoveryform.RecoveryByPhoneNumberForm;
 import by.av.api.signinform.SignInForm;
 import com.github.javafaker.Faker;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -14,11 +17,15 @@ import static by.av.utils.Utils.generateInvalidInputData;
 import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Epic("API")
+@Feature("Проверка формы восстановления пароля")
+@DisplayName("Тесты формы восстановления пароля по номеру телефона и по почте")
 public class RecoveryFormTest {
 
     Faker faker = new Faker();
 
     @Test
+    @DisplayName("Проверка восстановления пароля по номеру телефона при вводе пустых значений всех параметров")
     public void checkRecoveryByPhoneNumberWithEmptyParameters() {
         RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm("", 0);
 
@@ -32,6 +39,7 @@ public class RecoveryFormTest {
     }
 
     @Test
+    @DisplayName("Проверка восстановления пароля по номеру телефона при вводе пустого значения телефона")
     public void checkRecoveryByPhoneNumberWithEmptyPhoneNumber() {
         RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm("");
 
@@ -44,6 +52,7 @@ public class RecoveryFormTest {
     }
 
     @Test
+    @DisplayName("Проверка восстановления пароля по номеру телефона при вводе пустого значения кода страны")
     public void checkRecoveryByPhoneNumberWithEmptyCountryNumber() {
         RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generatePhoneNumber(), 0);
 
@@ -56,6 +65,7 @@ public class RecoveryFormTest {
     }
 
     @Test
+    @DisplayName("Проверка восстановления пароля по номеру телефона при вводе невалидного номера телефона")
     public void checkRecoveryByPhoneNumberWithInvalidPhoneNumber() {
         RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generateInvalidInputData());
 
@@ -68,6 +78,7 @@ public class RecoveryFormTest {
     }
 
     @Test
+    @DisplayName("Проверка восстановления пароля по номеру телефона при вводе кода другой страны")
     public void checkRecoveryByPhoneNumberWithAnotherCountryNumber() {
         RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generatePhoneNumber(), SignInForm.ANOTHER_COUNTRY_NUMBER);
 
@@ -80,6 +91,7 @@ public class RecoveryFormTest {
     }
 
     @Test
+    @DisplayName("Проверка восстановления пароля по номеру телефона при вводе невалидного кода страны")
     public void checkRecoveryByPhoneNumberWithInvalidCountryNumber() {
         RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generatePhoneNumber(), SignInForm.WRONG_COUNTRY_NUMBER);
 
@@ -91,6 +103,7 @@ public class RecoveryFormTest {
     }
 
     @Test
+    @DisplayName("Проверка восстановления пароля по номеру телефона при вводе незарегистрированного номера телефона")
     public void checkRecoveryByPhoneNumberWithUnregisteredPhoneNumber() {
         RecoveryByPhoneNumberForm recoveryByPhoneNumber = new RecoveryByPhoneNumberForm(generatePhoneNumber());
 
@@ -102,6 +115,7 @@ public class RecoveryFormTest {
     }
 
     @Test
+    @DisplayName("Проверка восстановления пароля по почте телефона при вводе пустого значения почты")
     public void checkRecoveryByEmailWithEmptyEmail() {
         RecoveryByEmailForm recoveryByEmail = new RecoveryByEmailForm("");
 
@@ -114,6 +128,7 @@ public class RecoveryFormTest {
     }
 
     @Test
+    @DisplayName("Проверка восстановления пароля по почте телефона при вводе невалидного значения почты")
     public void checkRecoveryByEmailWithInvalidEmail() {
         RecoveryByEmailForm recoveryByEmail = new RecoveryByEmailForm(generateInvalidInputData());
 
@@ -126,6 +141,7 @@ public class RecoveryFormTest {
     }
 
     @Test
+    @DisplayName("Проверка восстановления пароля по почте телефона при вводе незарегистрированного значения почты")
     public void checkRecoveryByEmailWithUnregisteredEmail() {
         RecoveryByEmailForm recoveryByEmail = new RecoveryByEmailForm(faker.internet().emailAddress());
 
