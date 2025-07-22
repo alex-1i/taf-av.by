@@ -2,7 +2,10 @@ package by.av.ui;
 
 import by.av.ui.expectedMessages.ExpectedMessages;
 import by.av.ui.pages.service.ServicePageLocator;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -12,6 +15,9 @@ import static by.av.utils.Utils.generateInvalidInputData;
 import static by.av.utils.Utils.getRandomService;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Epic("UI")
+@Feature("Поиск компаний по услуге")
+@DisplayName("Тесты поиска компаний по услуге")
 public class ServicePageTest extends WithServicePageSetUp{
 
     @BeforeEach
@@ -20,6 +26,7 @@ public class ServicePageTest extends WithServicePageSetUp{
     }
 
     @Test
+    @DisplayName("Проверка поиска компаний по услуге")
     public void checkSearchResultAfterInputValidService() {
         waitOfNumberOfElements(ServicePageLocator.LIST_OF_SERVICES, ServicePageLocator.DEFAULT_NUMBER_OF_SERVICES);
         String service = getRandomService(servicePage.getAllServiceText());
@@ -34,6 +41,7 @@ public class ServicePageTest extends WithServicePageSetUp{
     }
 
     @Test
+    @DisplayName("Проверка отсутствия компаний по невалидной услуге")
     public void checkSearchResultAfterInputInvalidService() {
         servicePage.inputSearchInfo(generateInvalidInputData());
 

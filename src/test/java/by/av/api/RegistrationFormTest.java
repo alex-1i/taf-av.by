@@ -5,7 +5,10 @@ import by.av.api.registrationform.RegistrationByEmailForm;
 import by.av.api.registrationform.RegistrationByPhoneNumberForm;
 import by.av.api.signinform.SignInForm;
 import com.github.javafaker.Faker;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -14,6 +17,9 @@ import static by.av.utils.Utils.generateInvalidInputData;
 import static by.av.utils.Utils.generatePhoneNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Epic("API")
+@Feature("Проверка формы регистрации")
+@DisplayName("Тесты формы регистрации по номеру телефона и по почте")
 public class RegistrationFormTest {
 
     private static final int MINIMUM_INSUFFICIENT_PASSWORD_LENGTH = 2;
@@ -22,6 +28,7 @@ public class RegistrationFormTest {
     Faker faker = new Faker();
 
     @Test
+    @DisplayName("Проверка регистрации по номеру телефона при вводе пустых значений всех параметров")
     public void checkRegistrationByPhoneNumberWithEmptyParameters() {
         RegistrationByPhoneNumberForm registrationByPhoneNumberForm = new RegistrationByPhoneNumberForm("", "", 0, "");
 
@@ -37,6 +44,7 @@ public class RegistrationFormTest {
     }
 
     @Test
+    @DisplayName("Проверка регистрации по номеру телефона при вводе невалидных значений всех параметров")
     public void checkRegistrationByPhoneNumberWithInvalidParameters() {
         RegistrationByPhoneNumberForm registrationByPhoneNumberForm = new RegistrationByPhoneNumberForm(faker.name().firstName(), faker.internet().password(MINIMUM_INSUFFICIENT_PASSWORD_LENGTH, MAXIMUM_INSUFFICIENT_PASSWORD_LENGTH, false, false, false), SignInForm.WRONG_COUNTRY_NUMBER, generateInvalidInputData());
 
@@ -48,6 +56,7 @@ public class RegistrationFormTest {
     }
 
     @Test
+    @DisplayName("Проверка регистрации по номеру телефона при вводе невалидных значений имени, короткого пароля и кода другой страны")
     public void checkRegistrationByPhoneNumberWithInvalidNameInvalidShortPasswordAndAnotherCountryNumber() {
         RegistrationByPhoneNumberForm registrationByPhoneNumberForm = new RegistrationByPhoneNumberForm(faker.name().firstName(), faker.internet().password(MINIMUM_INSUFFICIENT_PASSWORD_LENGTH, MAXIMUM_INSUFFICIENT_PASSWORD_LENGTH, false, false, false), SignInForm.ANOTHER_COUNTRY_NUMBER, generatePhoneNumber());
 
@@ -62,6 +71,7 @@ public class RegistrationFormTest {
     }
 
     @Test
+    @DisplayName("Проверка регистрации по номеру телефона при вводе невалидных значений имени, пароля и номера телефона")
     public void checkRegistrationByPhoneNumberWithInvalidNameInvalidPasswordAndPhoneNumber() {
         RegistrationByPhoneNumberForm registrationByPhoneNumberForm = new RegistrationByPhoneNumberForm(faker.name().firstName(), faker.internet().password(false), generateInvalidInputData());
 
@@ -76,6 +86,7 @@ public class RegistrationFormTest {
     }
 
     @Test
+    @DisplayName("Проверка регистрации по почте при вводе пустых значений всех параметров")
     public void checkRegistrationByEmailWithEmptyParameters() {
         RegistrationByEmailForm registrationByEmailForm = new RegistrationByEmailForm("", "", "");
 
@@ -90,6 +101,7 @@ public class RegistrationFormTest {
     }
 
     @Test
+    @DisplayName("Проверка регистрации по почте при вводе невалидных значений почты, короткого имени и пароля")
     public void checkRegistrationByEmailWithInvalidEmailAndShortNameAndPassword() {
         RegistrationByEmailForm registrationByEmailForm = new RegistrationByEmailForm(generateInvalidInputData(), String.valueOf(faker.lorem().character()), faker.internet().password(MINIMUM_INSUFFICIENT_PASSWORD_LENGTH, MAXIMUM_INSUFFICIENT_PASSWORD_LENGTH));
 
@@ -104,6 +116,7 @@ public class RegistrationFormTest {
     }
 
     @Test
+    @DisplayName("Проверка регистрации по почте при вводе невалидных значений всех параметров")
     public void checkRegistrationByEmailWithInvalidParameters() {
         RegistrationByEmailForm registrationByEmailForm = new RegistrationByEmailForm(generateInvalidInputData(), faker.name().firstName(), faker.internet().password(false));
 
