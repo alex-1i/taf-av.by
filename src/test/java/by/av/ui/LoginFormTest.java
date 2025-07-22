@@ -3,6 +3,7 @@ package by.av.ui;
 import by.av.ui.expectedMessages.ExpectedMessages;
 import by.av.ui.pages.home.HomePageLocator;
 import by.av.ui.pages.home.loginform.LoginFormLocator;
+import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +20,7 @@ public class LoginFormTest extends WithLoginSetUp {
     }
 
     @Test
+    @Description
     public void checkTitleLabelsButtonsAttributeOfLoginByPhoneNumberNames() {
         assertAll(
                 () -> assertEquals(ExpectedMessages.TITLE_LOGIN, loginForm.getTitleText()),
